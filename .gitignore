@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 node_modules/
+types/
 .Python
 build/
 develop-eggs/
