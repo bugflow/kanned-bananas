@@ -96,5 +96,8 @@
   },
   "prettier": {
     "trailingComma": "all"
+  },
+  "dependencies": {
+    "node-zenhub": "^1.2.1"
   }
 }
