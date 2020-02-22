@@ -11,10 +11,14 @@
   "license": "GPL-3.0",
   "private": false,
   "files": [
-    "lib"
+    "lib",
+    "dist"
   ],
   "main": "lib/kanned-bananas.cjs.js",
   "module": "lib/kanned-bananas.esm.js",
+  "bin": {
+    "kb": "dist/cli.js"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
@@ -34,5 +38,61 @@
     "rollup": "^1.27.4",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.1.2"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "format": "prettier --write '**/*.{js,json}'",
+    "lint": "eslint '**/*.js' --quiet",
+    "script": "node dist/cli.js",
+    "test": "jest --coverage"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "plugin:jest/recommended",
+      "plugin:jest/style",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "rules": {
+      "prettier/prettier": "error",
+      "no-console": "off"
+    },
+    "plugins": [
+      "jest",
+      "prettier"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all"
   }
 }
