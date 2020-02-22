@@ -98,6 +98,7 @@
     "trailingComma": "all"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "node-zenhub": "^1.2.1"
   }
 }
