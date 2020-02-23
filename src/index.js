@@ -1,12 +1,22 @@
-import config from "./config/index";
-import api from "./api/index";
+import Zenhub from "node-zenhub";
+import API from "./api/api";
+import config from "./config/config";
 
 const kb = function kannedBananas() {
+  const zenhub = new Zenhub(config.token);
+  const api = new API({ config, zenhub });
+
   config.boards.forEach(boardID => {
-    api.boards.getBoard(boardID, (error, data) =>
-      error ? console.log(error) : console.log(data),
-    );
+    api
+      .getZenhubBoard(boardID)
+      .then(response => console.log(response))
+      .catch(e => console.error(e));
   });
+
+  api
+    .getZenhubIssueEvents(config.boards[0], 1)
+    .then(response => console.log(response))
+    .catch(e => console.error(e));
 };
 
 export default kb;
