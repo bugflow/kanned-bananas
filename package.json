@@ -99,6 +99,7 @@
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "graphql-request": "^1.8.2",
     "node-zenhub": "^1.2.1"
   }
 }
