@@ -1,18 +1,9 @@
 class API {
-  constructor({ config, GraphQLClient, zenhub }) {
-    Object.assign(this, { config, GraphQLClient, zenhub });
+  constructor({ config, graphQL, zenhub }) {
+    Object.assign(this, { config, graphQL, zenhub });
   }
 
   async getGithubIssues(owner, repo) {
-    const token = this.config.githubToken;
-    const endpoint = "https://api.github.com/graphql";
-
-    const graphQLClient = new this.GraphQLClient(endpoint, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-
     // TODO (dormerod): figure out why GQL variables failed, fix interpolation
     const query = /* GraphQL */ `
       query {
@@ -29,7 +20,7 @@ class API {
       }
     `;
 
-    const data = await graphQLClient.request(query);
+    const data = await this.graphQL.request(query);
     return data;
   }
 

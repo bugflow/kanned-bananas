@@ -1,12 +1,7 @@
-import { GraphQLClient } from "graphql-request";
-import Zenhub from "node-zenhub";
-import API from "./api/api";
 import config from "./config/config";
+import api from "./api/index";
 
 const kb = function kannedBananas() {
-  const zenhub = new Zenhub(config.zenhubToken);
-  const api = new API({ config, GraphQLClient, zenhub });
-
   config.project.repos.forEach(repo => {
     api
       .getZenhubBoard(repo.id)
@@ -24,7 +19,7 @@ const kb = function kannedBananas() {
       config.project.repos[0].owner,
       config.project.repos[0].name,
     )
-    .then(response => console.log(response.repository.issues.edges))
+    .then(response => console.log(response))
     .catch(e => console.error(e));
 };
 
