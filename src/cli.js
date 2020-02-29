@@ -1,3 +1,3 @@
-import kb from "./index";
+import kb from ".";
 
 kb();

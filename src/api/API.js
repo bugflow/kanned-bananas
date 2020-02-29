@@ -16,25 +16,86 @@ class API {
     return response.data;
   }
 
-  async getGithubIssues(owner, repo) {
-    // TODO (dormerod): figure out why GQL variables failed, fix interpolation
+  async queryGithub(owner, repo, cursor = null) {
+    // use after argument in query only if a cursor is provided
+    // TODO (dormerod): fix the string interpolation for the cursor here
+    let after = "";
+    if (cursor !== null) after = `, after: "${cursor}"`;
+
     const query = /* GraphQL */ `
-      query {
-        repository(owner: "${owner}", name: "${repo}") {
-          issues(last: 100) {
+      query($owner: String!, $repo: String!) {
+        repository(owner: $owner, name: $repo) {
+          name
+          issues(first: 100${after}) {
             edges {
               node {
                 number
                 title
               }
             }
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
           }
         }
       }
     `;
 
-    const data = await this.graphQL.request(query);
+    const variables = {
+      owner,
+      repo,
+    };
+
+    let data = null;
+    try {
+      data = await this.graphQL.request(query, variables);
+    } catch (e) {
+      console.error(e);
+    }
+
     return data;
+  }
+
+  async getGithubIssues(owner, repo, cursor = null, issues = []) {
+    let knownIssues;
+    let response = null;
+
+    try {
+      response = await this.queryGithub(owner, repo, cursor);
+
+      if (response) {
+        // if we received new issues, add them to any previously received issues
+        const newIssues = response.repository.issues.edges;
+        knownIssues = [...issues, ...newIssues];
+
+        // then recurse until we get all the issues for this repo
+        // TODO (dormerod): use optional chaining here once ESLint supports it
+        if (response.repository.issues.pageInfo.hasNextPage) {
+          const nextCursor = response.repository.issues.pageInfo.endCursor;
+          const nextIssues = await this.getGithubIssues(
+            owner,
+            repo,
+            nextCursor,
+            knownIssues,
+          );
+
+          // if nextIssues is iterable
+          if (
+            nextIssues !== null &&
+            nextIssues !== undefined &&
+            Symbol.iterator in Object(nextIssues)
+          ) {
+            // add the issues that bubble back up to our list of known issues
+            knownIssues = [...knownIssues, ...nextIssues];
+          }
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    return knownIssues;
   }
 
   async getZenhubBoard(repoID) {

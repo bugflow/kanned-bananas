@@ -56,9 +56,9 @@ describe("API wrappers for Github and Zenhub", () => {
     expect(api.graphQL).toBe(mockGraphQL);
   });
 
-  /* api.getGithubIssues */
+  /* api.queryGithub */
   it("uses api.graphQL to get Github issues", async () => {
-    const data = await api.getGithubIssues(true);
+    const data = await api.queryGithub(true);
     expect(data).toBe(mockResponse);
     expect(mockGraphQL.request).toHaveBeenCalled();
   });

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GraphQLClient } from "graphql-request";
-import config from "../config/config";
+import config from "../config";
 import API from "./API";
 
 const graphQL = new GraphQLClient(config.githubEndpoint, {

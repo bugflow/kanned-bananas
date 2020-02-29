@@ -1,18 +1,7 @@
-import config from "./config/config";
-import api from "./api/index";
+import data from "./data";
 
 const kb = function kannedBananas() {
-  config.project.repos.forEach(repo => {
-    api
-      .getZenhubBoard(repo.id)
-      .then(response => console.log(response))
-      .catch(e => console.error(e));
-  });
-
-  api
-    .getZenhubEvents(config.project.repos[0].id, 1)
-    .then(response => console.log(response))
-    .catch(e => console.error(e));
+  data.load().then(self => console.log(self.zenhubIssues));
 };
 
 export default kb;
