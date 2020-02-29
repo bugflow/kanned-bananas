@@ -1,6 +1,19 @@
 class API {
-  constructor({ config, graphQL, zenhub }) {
-    Object.assign(this, { config, graphQL, zenhub });
+  constructor({ axios, config, graphQL }) {
+    Object.assign(this, { axios, config, graphQL });
+  }
+
+  async get(headers, url, params = {}) {
+    const request = { method: "get", headers, url, params };
+
+    let response = { data: null };
+    try {
+      response = await this.axios(request);
+    } catch (e) {
+      console.error(e);
+    }
+
+    return response.data;
   }
 
   async getGithubIssues(owner, repo) {
@@ -24,22 +37,24 @@ class API {
     return data;
   }
 
-  getZenhubBoard(repoID) {
-    return new Promise((resolve, reject) => {
-      this.zenhub.boards.getBoard(repoID, (error, data) => {
-        if (error !== null) reject(error);
-        else resolve(data);
-      });
-    });
+  async getZenhubBoard(repoID) {
+    const headers = {
+      "X-Authentication-Token": this.config.zenhubToken,
+    };
+    const endpoint = `https://api.zenhub.com/p2/workspaces/${this.config.project.zenhubWorkspaceID}/repositories/${repoID}/board`;
+
+    const response = await this.get(headers, endpoint);
+    return response;
   }
 
-  getZenhubIssueEvents(repoID, issueNum) {
-    return new Promise((resolve, reject) => {
-      this.zenhub.issues.getIssueEvents(repoID, issueNum, (error, data) => {
-        if (error !== null) reject(error);
-        else resolve(data);
-      });
-    });
+  async getZenhubEvents(repoID, issueNum) {
+    const headers = {
+      "X-Authentication-Token": this.config.zenhubToken,
+    };
+    const endpoint = `https://api.zenhub.com/p1/repositories/${repoID}/issues/${issueNum}/events`;
+
+    const response = await this.get(headers, endpoint);
+    return response;
   }
 }
 

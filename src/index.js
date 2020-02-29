@@ -10,15 +10,7 @@ const kb = function kannedBananas() {
   });
 
   api
-    .getZenhubIssueEvents(config.project.repos[0].id, 1)
-    .then(response => console.log(response))
-    .catch(e => console.error(e));
-
-  api
-    .getGithubIssues(
-      config.project.repos[0].owner,
-      config.project.repos[0].name,
-    )
+    .getZenhubEvents(config.project.repos[0].id, 1)
     .then(response => console.log(response))
     .catch(e => console.error(e));
 };
