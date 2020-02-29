@@ -2,7 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import babel from "rollup-plugin-babel";
 import pkg from "./package.json";
 
-const external = ["axios", "dotenv", "graphql-request"];
+const external = ["axios", "dotenv", "fs", "graphql-request"];
 const plugins = [
   resolve({
     mainFields: ["module", "main"],

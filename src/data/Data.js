@@ -4,16 +4,26 @@ class Data {
     Object.assign(this, { api, config, cache });
 
     this.githubIssues = [];
-    this.zenhubBoards = [];
     this.zenhubIssues = [];
+    this.zenhubBoards = [];
   }
 
   async load() {
-    if (this.cache.isHot) {
+    if (await this.cache.isHot()) {
       // TODO (dormerod): do stuff with cached data
     } else {
       await this.loadGithubData();
       await this.loadZenhubData();
+
+      const now = new Date();
+      const json = JSON.stringify({
+        lastUpdated: now,
+        githubIssues: this.githubIssues,
+        zenhubIssues: this.zenhubIssues,
+        zenhubBoards: this.zenhubBoards,
+      });
+
+      this.cache.write({ json });
     }
     return this;
   }
