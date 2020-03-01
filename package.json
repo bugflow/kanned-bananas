@@ -19,6 +19,11 @@
   "bin": {
     "kb": "dist/cli.js"
   },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "graphql-request": "^1.8.2"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
@@ -44,6 +49,7 @@
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "format": "prettier --write 'src/*.{js,json}'",
+    "go": "yarn build && yarn script",
     "lint": "eslint 'src/*.js' --quiet",
     "script": "node dist/cli.js",
     "test": "jest --coverage",
@@ -96,10 +102,5 @@
   },
   "prettier": {
     "trailingComma": "all"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "dotenv": "^8.2.0",
-    "graphql-request": "^1.8.2"
   }
 }
