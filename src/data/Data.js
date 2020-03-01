@@ -4,6 +4,7 @@ class Data {
     Object.assign(this, { api, config, cache });
 
     this.githubIssues = [];
+    this.closedIssues = [];
     this.zenhubIssues = [];
     this.zenhubBoards = [];
   }
@@ -37,6 +38,17 @@ class Data {
       try {
         const issues = await this.api.getGithubIssues(repo.owner, repo.name);
 
+        // save arrays of closed issues for adding to the Zenhub board later
+        const closedIssues = issues
+          .filter(issue => issue.node.closed)
+          .map(issue => ({
+            issue_number: issue.node.number,
+            is_epic: null, // TODO: consider adding epic status if useful
+            position: null,
+          }));
+        this.closedIssues.push({ name: repo.name, issues: closedIssues });
+
+        // save issues by repo
         this.githubIssues.push({ name: repo.name, issues });
       } catch (e) {
         console.error(e);
@@ -48,8 +60,22 @@ class Data {
     for await (const repo of this.config.project.repos) {
       try {
         const board = await this.api.getZenhubBoard(repo.id);
+
+        // add another column for closed isses (not included by default)
+        const closedIssues = this.closedIssues.find(
+          searchedRepo => searchedRepo.name === repo.name,
+        ).issues;
+
+        const closedColumn = {
+          id: "closed",
+          name: "Closed",
+          issues: closedIssues,
+        };
+
+        board.pipelines.push(closedColumn);
         this.zenhubBoards.push(board);
 
+        // add Zenhub issue events and other data to issues
         for await (const column of board.pipelines) {
           for await (const issue of column.issues) {
             // find the matching issue from Github, to get the title etc

@@ -31,6 +31,9 @@ class API {
               node {
                 number
                 title
+                closed
+                closedAt
+                createdAt
               }
             }
             pageInfo {
