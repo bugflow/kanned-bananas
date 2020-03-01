@@ -9,13 +9,16 @@ class Data {
   }
 
   async load() {
-    if (await this.cache.isHot()) {
-      // TODO (dormerod): do stuff with cached data
+    const now = new Date();
+
+    if (await this.cache.isCurrent(now)) {
+      this.githubIssues = this.cache.data.githubIssues;
+      this.zenhubIssues = this.cache.data.zenhubIssues;
+      this.zenhubBoards = this.cache.data.zenhubBoards;
     } else {
       await this.loadGithubData();
       await this.loadZenhubData();
 
-      const now = new Date();
       const json = JSON.stringify({
         lastUpdated: now,
         githubIssues: this.githubIssues,
@@ -23,8 +26,9 @@ class Data {
         zenhubBoards: this.zenhubBoards,
       });
 
-      this.cache.write({ json });
+      this.cache.write(json);
     }
+
     return this;
   }
 
