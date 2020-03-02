@@ -78,29 +78,44 @@ class Data {
         // add Zenhub issue events and other data to issues
         for await (const column of board.pipelines) {
           for await (const issue of column.issues) {
+            issue.column = column.name;
+            issue.repoName = repo.name;
+            issue.repoID = repo.id;
+            issue.events = await this.api.getZenhubEvents(
+              repo.id,
+              issue.issue_number,
+            );
+
             // find the matching issue from Github, to get the title etc
             const foundRepo = this.githubIssues.find(
               searchedRepo => searchedRepo.name === repo.name,
             );
 
+            let foundIssue = null;
             if (foundRepo) {
-              const foundIssue = foundRepo.issues.find(
+              foundIssue = foundRepo.issues.find(
                 searched => searched.node.number === issue.issue_number,
               );
-
-              // if we found the issue title etc, add it to the current issue
-              if (foundIssue) issue.title = foundIssue.node.title;
             }
 
-            // add other useful data to each issue
-            issue.column = column.name;
-            issue.repoName = repo.name;
-            issue.repoID = repo.id;
-
-            issue.events = await this.api.getZenhubEvents(
-              repo.id,
-              issue.issue_number,
-            );
+            if (foundIssue) {
+              // if we found the Github issue, add issue close events and title
+              issue.title = foundIssue.node.title;
+              if (foundIssue.node.closed) {
+                issue.events.unshift({
+                  user_id: null,
+                  type: "transferIssue",
+                  created_at: foundIssue.node.closedAt,
+                  from_pipeline: {
+                    name: null,
+                  },
+                  to_pipeline: {
+                    name: "Closed",
+                  },
+                  workspace_id: null,
+                });
+              }
+            }
 
             this.zenhubIssues.push(issue);
           }
