@@ -1,3 +1,5 @@
+import { capitalize } from "../util";
+
 const flows = function gatherFlows({ time, issues }) {
   const flowTypes = [
     {
@@ -68,11 +70,14 @@ const flows = function gatherFlows({ time, issues }) {
               (type.from.length === 0 || // treat empty 'from' array as wildcard
                 type.from.includes(event.from_pipeline.name))
             ) {
+              console.log(event, event.to_pipeline);
               return true;
             }
             return false;
           });
-          if (foundType) flowEvents[foundType.description].push(issue);
+          if (foundType) {
+            flowEvents[foundType.description].push(issue);
+          }
         }
       }
     });
@@ -88,7 +93,7 @@ const flows = function gatherFlows({ time, issues }) {
   let doneReport = "Tickets completed:";
   flowEvents.Completed.forEach(issue => {
     doneReport = `${doneReport}
-  * ${issue.title}`;
+  * ${capitalize(issue.title)}`;
   });
 
   const reports = {
