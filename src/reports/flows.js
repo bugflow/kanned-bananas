@@ -1,33 +1,33 @@
-const flows = function gatherFlows({ issues }) {
+const flows = function gatherFlows({ time, issues }) {
   const flowTypes = [
     {
-      start: [
+      from: [
         "Product Backlog",
         "Sprint Backlog",
         "Failed QA",
         "In Progress",
         "Review/QA",
       ],
-      end: ["New Issues", "Icebox"],
+      to: ["New Issues", "Icebox"],
       description: "Scope decrease",
     },
     {
-      start: ["New Issues", "Icebox"],
-      end: ["Product Backlog", "Sprint Backlog", "In Progress"],
+      from: ["New Issues", "Icebox"],
+      to: ["Product Backlog", "Sprint Backlog", "In Progress"],
       description: "Scope increase",
     },
     {
-      start: ["Product Backlog", "Sprint Backlog"],
-      end: ["In Progress"],
+      from: ["Product Backlog", "Sprint Backlog"],
+      to: ["In Progress"],
       description: "Started",
     },
     {
-      start: ["Product Backlog", "Sprint Backlog", "In Progress"],
-      end: ["Review/QA"],
+      from: ["Product Backlog", "Sprint Backlog", "In Progress"],
+      to: ["Review/QA"],
       description: "Developed",
     },
     {
-      start: [
+      from: [
         "New Issues",
         "Icebox",
         "Product Backlog",
@@ -36,18 +36,19 @@ const flows = function gatherFlows({ issues }) {
         "Review/QA",
         "Done",
       ],
-      end: ["Failed QA"],
+      to: ["Failed QA"],
       description: "Rejected",
     },
-    { start: ["Failed QA"], end: ["Review/QA"], description: "Fixed" },
+    { from: ["Failed QA"], to: ["Review/QA"], description: "Fixed" },
     {
-      start: [],
-      end: ["Done", "Closed"],
+      from: [],
+      to: ["Done", "Closed"],
       description: "Completed",
     },
   ];
 
   const flowEvents = { Other: [] };
+  // populate flowEvents with event keys and arrays, ready to push events to
   flowTypes.forEach(type => {
     const key = type.description;
     flowEvents[key] = [];
@@ -55,13 +56,17 @@ const flows = function gatherFlows({ issues }) {
 
   issues.forEach(issue => {
     issue.events.forEach(event => {
-      if (event.type === "transferIssue") {
-        if (event && event.to_pipeline && event.to_pipeline.name) {
+      if (
+        event &&
+        event.type === "transferIssue" && // event is a flow between columns
+        time.inRange(event.created_at) // event is in the reporting timeframe
+      ) {
+        if (event.to_pipeline && event.to_pipeline.name) {
           const foundType = flowTypes.find(type => {
             if (
-              type.end.includes(event.to_pipeline.name) &&
-              (type.start.length === 0 ||
-                type.start.includes(event.from_pipeline.name))
+              type.to.includes(event.to_pipeline.name) &&
+              (type.from.length === 0 || // treat empty 'from' array as wildcard
+                type.from.includes(event.from_pipeline.name))
             ) {
               return true;
             }
@@ -73,14 +78,14 @@ const flows = function gatherFlows({ issues }) {
     });
   });
 
-  let summaryReport = "Summary:";
+  let summaryReport = "Summary (number of tickets):";
   Object.entries(flowEvents).forEach(([event, eventIssues]) => {
     let summary = "";
     if (eventIssues.length > 0) summary = `\n  ${event}: ${eventIssues.length}`;
     summaryReport += summary;
   });
 
-  let doneReport = "Done:";
+  let doneReport = "Tickets completed:";
   flowEvents.Completed.forEach(issue => {
     doneReport = `${doneReport}
   * ${issue.title}`;
@@ -94,4 +99,4 @@ const flows = function gatherFlows({ issues }) {
   return reports;
 };
 
-export { flows }; // eslint-disable-line import/prefer-default-export
+export { flows };
