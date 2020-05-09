@@ -5,7 +5,6 @@ import { stocks, flows } from "./reports";
 const kb = function kannedBananas() {
   const time = new Time({
     period: "day",
-    fromTimestamp: "2020-05-07T00:00:00",
   });
 
   data.load().then(self => {
@@ -17,6 +16,7 @@ const kb = function kannedBananas() {
     const { workingReport, testingReport } = stocks(self.zenhubIssues);
 
     console.log();
+    console.log(time.description(), "\n");
     console.log(summaryReport, "\n");
     console.log(doneReport, "\n");
     console.log(workingReport, "\n");
