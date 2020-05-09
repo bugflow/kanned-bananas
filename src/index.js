@@ -1,10 +1,11 @@
 import data from "./data";
 import { Time } from "./time";
-import { flows } from "./reports";
+import { stocks, flows } from "./reports";
 
 const kb = function kannedBananas() {
   const time = new Time({
     period: "day",
+    fromTimestamp: "2020-05-07T00:00:00",
   });
 
   data.load().then(self => {
@@ -13,9 +14,13 @@ const kb = function kannedBananas() {
       issues: self.zenhubIssues,
     };
     const { summaryReport, doneReport } = flows(flowArgs);
+    const { workingReport, testingReport } = stocks(self.zenhubIssues);
 
+    console.log();
     console.log(summaryReport, "\n");
-    console.log(doneReport);
+    console.log(doneReport, "\n");
+    console.log(workingReport, "\n");
+    console.log(testingReport, "\n");
   });
 };
 
