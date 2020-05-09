@@ -70,13 +70,20 @@ const flows = function gatherFlows({ time, issues }) {
               (type.from.length === 0 || // treat empty 'from' array as wildcard
                 type.from.includes(event.from_pipeline.name))
             ) {
-              console.log(event, event.to_pipeline);
               return true;
             }
             return false;
           });
           if (foundType) {
-            flowEvents[foundType.description].push(issue);
+            // TODO (dormerod): review cases where we might not mind duplicates
+            // push the issue to flowEvents unless it's already there
+            if (
+              !flowEvents[foundType.description].some(
+                item => item.issue_number === issue.issue_number,
+              )
+            ) {
+              flowEvents[foundType.description].push(issue);
+            }
           }
         }
       }
