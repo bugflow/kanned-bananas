@@ -99,8 +99,10 @@ const flows = function gatherFlows({ time, issues }) {
 
   let doneReport = "Tickets completed:";
   flowEvents.Completed.forEach(issue => {
-    doneReport = `${doneReport}
+    if (issue.title) {
+      doneReport = `${doneReport}
   * ${capitalize(issue.title)}`;
+    }
   });
 
   const reports = {

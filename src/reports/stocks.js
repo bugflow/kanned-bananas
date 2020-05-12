@@ -6,15 +6,20 @@ const stocks = function reportStocks(issues) {
   const workingIssues = issues.filter(issue => issue.column === "In Progress");
   let workingReport = "Currently working on:";
   workingIssues.forEach(issue => {
-    workingReport = `${workingReport}
+    // TODO (dormerod): this if statement hides PRs from report -- fix properly
+    if (issue.title) {
+      workingReport = `${workingReport}
   * ${capitalize(issue.title)}`;
+    }
   });
 
   const testingIssues = issues.filter(issue => issue.column === "Review/QA");
   let testingReport = "Currently testing:";
   testingIssues.forEach(issue => {
-    testingReport = `${testingReport}
+    if (issue.title) {
+      testingReport = `${testingReport}
   * ${capitalize(issue.title)}`;
+    }
   });
 
   const reports = {
