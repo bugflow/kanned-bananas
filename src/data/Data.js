@@ -1,3 +1,5 @@
+import { sleep } from "../util";
+
 /* eslint-disable no-restricted-syntax */
 class Data {
   constructor({ api, config, cache }) {
@@ -78,6 +80,8 @@ class Data {
         // add Zenhub issue events and other data to issues
         for await (const column of board.pipelines) {
           for await (const issue of column.issues) {
+            await sleep(600); // Zenhub API rate limit is 100 requests per min
+
             issue.column = column.name;
             issue.repoName = repo.name;
             issue.repoID = repo.id;
@@ -123,6 +127,8 @@ class Data {
       } catch (e) {
         console.error(e);
       }
+
+      await sleep(600); // Zenhub API rate limit is 100 requests per min
     }
   }
 }
