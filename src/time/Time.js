@@ -82,9 +82,14 @@ class Time {
     if (timestamp) {
       const timeToCompare = DateTime.fromISO(timestamp);
       if (this.range.contains(timeToCompare)) return true;
-
-      return false;
     }
+
+    return false;
+  }
+
+  isBefore(dateTime) {
+    if (dateTime && this.range.end <= dateTime) return true;
+
     return false;
   }
 }

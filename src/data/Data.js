@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { sleep } from "../util";
 
 /* eslint-disable no-restricted-syntax */
@@ -11,10 +12,8 @@ class Data {
     this.zenhubBoards = [];
   }
 
-  async load() {
-    const now = new Date();
-
-    if (await this.cache.isCurrent(now)) {
+  async load(time) {
+    if (await this.cache.isCurrent(time)) {
       this.githubIssues = this.cache.data.githubIssues;
       this.zenhubIssues = this.cache.data.zenhubIssues;
       this.zenhubBoards = this.cache.data.zenhubBoards;
@@ -23,7 +22,7 @@ class Data {
       await this.loadZenhubData();
 
       const json = JSON.stringify({
-        lastUpdated: now,
+        lastUpdated: DateTime.utc().toString(),
         githubIssues: this.githubIssues,
         zenhubIssues: this.zenhubIssues,
         zenhubBoards: this.zenhubBoards,

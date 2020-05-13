@@ -1,21 +1,25 @@
+import { DateTime } from "luxon";
+
 class Cache {
   constructor({ fs, readFile, file = "data.json", directory = "./.cache/" }) {
-    this.fs = fs;
-    this.readFile = readFile;
-    this.file = file;
-    this.directory = directory;
+    Object.assign(this, { fs, readFile, file, directory });
+
     this.path = `${directory}${file}`;
     this.data = null;
   }
 
-  async isCurrent() {
+  async isCurrent(time) {
     const data = await this.read();
 
     if (data !== null) {
       this.data = JSON.parse(data);
-      // TODO (dormerod): logic to determine whether data is up to date
 
-      return true;
+      if (this.data.lastUpdated) {
+        const timeLastUpdated = DateTime.fromISO(this.data.lastUpdated);
+
+        // if the reporting window is before the cache last updated time...
+        if (time.isBefore(timeLastUpdated)) return true;
+      }
     }
 
     return false;

@@ -8,7 +8,7 @@ const kb = function kannedBananas() {
   });
 
   data
-    .load()
+    .load(time)
     .then(self => {
       console.log(dailySummary({ time, issues: self.zenhubIssues }));
     })
