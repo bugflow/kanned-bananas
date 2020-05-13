@@ -75,13 +75,15 @@ const flows = function gatherFlows({ time, issues }) {
             return false;
           });
           if (foundType) {
-            // TODO (dormerod): review cases where we might not mind duplicates
-            // push the issue to flowEvents unless it's already there
+            // guard against data saying a ticket was completed more than once
             if (
-              !flowEvents[foundType.description].some(
+              foundType.description === "Completed" &&
+              flowEvents[foundType.description].some(
                 item => item.issue_number === issue.issue_number,
               )
             ) {
+              // don't push the issue, because it was already marked completed
+            } else {
               flowEvents[foundType.description].push(issue);
             }
           }
