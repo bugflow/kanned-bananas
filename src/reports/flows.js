@@ -41,7 +41,11 @@ const flows = function gatherFlows({ time, issues }) {
       to: ["Failed QA"],
       description: "Rejected",
     },
-    { from: ["Failed QA"], to: ["Review/QA"], description: "Fixed" },
+    {
+      from: ["Failed QA"],
+      to: ["In Progress", "Review/QA"],
+      description: "Fixed",
+    },
     {
       from: [],
       to: ["Done", "Closed"],
