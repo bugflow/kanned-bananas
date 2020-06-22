@@ -4,6 +4,7 @@ const flows = function gatherFlows({ time, issues }) {
   const flowTypes = [
     {
       from: [
+        "Backlog",
         "Product Backlog",
         "Sprint Backlog",
         "Failed QA",
@@ -15,16 +16,16 @@ const flows = function gatherFlows({ time, issues }) {
     },
     {
       from: ["New Issues", "Icebox"],
-      to: ["Product Backlog", "Sprint Backlog", "In Progress"],
+      to: ["Backlog", "Product Backlog", "Sprint Backlog", "In Progress"],
       description: "Scope increase",
     },
     {
-      from: ["Product Backlog", "Sprint Backlog"],
+      from: ["Backlog", "Product Backlog", "Sprint Backlog"],
       to: ["In Progress"],
       description: "Started",
     },
     {
-      from: ["Product Backlog", "Sprint Backlog", "In Progress"],
+      from: ["Backlog", "Product Backlog", "Sprint Backlog", "In Progress"],
       to: ["Review/QA"],
       description: "Developed",
     },
@@ -32,6 +33,7 @@ const flows = function gatherFlows({ time, issues }) {
       from: [
         "New Issues",
         "Icebox",
+        "Backlog",
         "Product Backlog",
         "Sprint Backlog",
         "In Progress",
