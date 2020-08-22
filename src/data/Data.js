@@ -60,7 +60,7 @@ class Data {
   async loadZenhubData() {
     for await (const repo of this.config.project.repos) {
       try {
-        const board = await this.api.getZenhubBoard(repo.id);
+        const board = await this.api.getZenhubBoard(repo.zenhubID);
 
         // add another column for closed isses (not included by default)
         const closedIssues = this.closedIssues.find(
@@ -83,9 +83,9 @@ class Data {
 
             issue.column = column.name;
             issue.repoName = repo.name;
-            issue.repoID = repo.id;
+            issue.repoID = repo.zenhubID;
             issue.events = await this.api.getZenhubEvents(
-              repo.id,
+              repo.zenhubID,
               issue.issue_number,
             );
 
