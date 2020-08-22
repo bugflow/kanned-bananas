@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "name": "Castles in the sky",
+      "zenhubWorkspaceID": "11235813",
+      "repos": [
+        {
+          "description": "Castle backend",
+          "zenhubID": "123",
+          "owner": "castle",
+          "name": "castle-backend"
+        },
+        {
+          "description": "Castle frontend",
+          "zenhubID": "456",
+          "owner": "castle",
+          "name": "castle-app"
+        }
+      ]
+    },
+    {
+      "name": "Castle on a cloud",
+      "zenhubWorkspaceID": "11237136",
+      "repos": [
+        {
+          "description": "Castle infrastructure as code",
+          "zenhubID": "789",
+          "owner": "castle",
+          "name": "castle-cloud"
+        }
+      ]
+    }
+  ]
+}

@@ -101,21 +101,21 @@ class API {
     return knownIssues;
   }
 
-  async getZenhubBoard(repoID) {
+  async getZenhubBoard({ project, repo }) {
     const headers = {
       "X-Authentication-Token": this.config.zenhubToken,
     };
-    const endpoint = `https://api.zenhub.com/p2/workspaces/${this.config.project.zenhubWorkspaceID}/repositories/${repoID}/board`;
+    const endpoint = `https://api.zenhub.com/p2/workspaces/${project.zenhubWorkspaceID}/repositories/${repo.zenhubID}/board`;
 
     const response = await this.get(headers, endpoint);
     return response;
   }
 
-  async getZenhubEvents(repoID, issueNum) {
+  async getZenhubEvents({ repo, issue }) {
     const headers = {
       "X-Authentication-Token": this.config.zenhubToken,
     };
-    const endpoint = `https://api.zenhub.com/p1/repositories/${repoID}/issues/${issueNum}/events`;
+    const endpoint = `https://api.zenhub.com/p1/repositories/${repo.zenhubID}/issues/${issue.issue_number}/events`;
 
     const response = await this.get(headers, endpoint);
     return response;

@@ -6,24 +6,38 @@ import API from "./API";
 const mockConfig = {
   githubToken: "123456789",
   zenhubToken: "987654321",
-  project: {
-    name: "Castles in the sky",
-    zenhubWorkspaceID: "11235813",
-    repos: [
-      {
-        description: "Castle app",
-        id: "123",
-        owner: "castle",
-        name: "castle-app",
-      },
-      {
-        description: "Castle infrastructure as code",
-        id: "456",
-        owner: "castle",
-        name: "castle-cloud",
-      },
-    ],
-  },
+  projects: [
+    {
+      name: "Castles in the sky",
+      zenhubWorkspaceID: "11235813",
+      repos: [
+        {
+          description: "Castle backend",
+          zenhubID: "123",
+          owner: "castle",
+          name: "castle-backend",
+        },
+        {
+          description: "Castle frontend",
+          zenhubID: "456",
+          owner: "castle",
+          name: "castle-app",
+        },
+      ],
+    },
+    {
+      name: "Castle on a cloud",
+      zenhubWorkspaceID: "11237136",
+      repos: [
+        {
+          description: "Castle infrastructure as code",
+          zenhubID: "789",
+          owner: "castle",
+          name: "castle-cloud",
+        },
+      ],
+    },
+  ],
 };
 
 // Mock response for mock API wrappers
@@ -51,7 +65,7 @@ describe("API wrappers for Github and Zenhub", () => {
   it("should be instantiated with config, graphQL and axios objects", () => {
     expect(api.config).toBe(mockConfig);
     expect(api.config.githubToken).toBe("123456789");
-    expect(api.config.project.repos).toHaveLength(2);
+    expect(api.config.projects[0].repos).toHaveLength(2);
     expect(api.axios).toBe(mockAxios);
     expect(api.graphQL).toBe(mockGraphQL);
   });
@@ -69,9 +83,12 @@ describe("API wrappers for Github and Zenhub", () => {
       headers: { "X-Authentication-Token": mockConfig.zenhubToken },
       method: "get",
       params: {},
-      url: `https://api.zenhub.com/p2/workspaces/${mockConfig.project.zenhubWorkspaceID}/repositories/${mockConfig.project.repos[0].id}/board`,
+      url: `https://api.zenhub.com/p2/workspaces/${mockConfig.projects[0].zenhubWorkspaceID}/repositories/${mockConfig.projects[0].repos[0].zenhubID}/board`,
     };
-    const data = await api.getZenhubBoard(mockConfig.project.repos[0].id);
+    const data = await api.getZenhubBoard({
+      project: mockConfig.projects[0],
+      repo: mockConfig.projects[0].repos[0],
+    });
 
     expect(data).toBe(mockResponse);
     expect(mockAxios.mock.calls).toHaveLength(1);
@@ -84,9 +101,12 @@ describe("API wrappers for Github and Zenhub", () => {
       headers: { "X-Authentication-Token": mockConfig.zenhubToken },
       method: "get",
       params: {},
-      url: `https://api.zenhub.com/p1/repositories/${mockConfig.project.repos[0].id}/issues/1/events`,
+      url: `https://api.zenhub.com/p1/repositories/${mockConfig.projects[0].repos[0].zenhubID}/issues/1/events`,
     };
-    const data = await api.getZenhubEvents(mockConfig.project.repos[0].id, 1);
+    const data = await api.getZenhubEvents({
+      repo: mockConfig.projects[0].repos[0],
+      issue: { issue_number: 1 },
+    });
 
     expect(data).toBe(mockResponse);
     expect(mockAxios.mock.calls).toHaveLength(2);

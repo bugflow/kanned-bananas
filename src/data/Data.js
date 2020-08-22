@@ -3,8 +3,8 @@ import { sleep } from "../util";
 
 /* eslint-disable no-restricted-syntax */
 class Data {
-  constructor({ api, config, cache }) {
-    Object.assign(this, { api, config, cache });
+  constructor({ api, cache, config }) {
+    Object.assign(this, { api, cache, config });
 
     this.githubIssues = [];
     this.closedIssues = [];
@@ -12,14 +12,14 @@ class Data {
     this.zenhubBoards = [];
   }
 
-  async load(time) {
+  async load({ project, time }) {
     if (await this.cache.isCurrent(time)) {
       this.githubIssues = this.cache.data.githubIssues;
       this.zenhubIssues = this.cache.data.zenhubIssues;
       this.zenhubBoards = this.cache.data.zenhubBoards;
     } else {
-      await this.loadGithubData();
-      await this.loadZenhubData();
+      await this.loadGithubData(project);
+      await this.loadZenhubData(project);
 
       const json = JSON.stringify({
         lastUpdated: DateTime.utc().toString(),
@@ -34,8 +34,8 @@ class Data {
     return this;
   }
 
-  async loadGithubData() {
-    for await (const repo of this.config.project.repos) {
+  async loadGithubData(project) {
+    for await (const repo of project.repos) {
       try {
         const issues = await this.api.getGithubIssues(repo.owner, repo.name);
 
@@ -57,10 +57,10 @@ class Data {
     }
   }
 
-  async loadZenhubData() {
-    for await (const repo of this.config.project.repos) {
+  async loadZenhubData(project) {
+    for await (const repo of project.repos) {
       try {
-        const board = await this.api.getZenhubBoard(repo.zenhubID);
+        const board = await this.api.getZenhubBoard({ project, repo });
 
         // add another column for closed isses (not included by default)
         const closedIssues = this.closedIssues.find(
@@ -84,10 +84,10 @@ class Data {
             issue.column = column.name;
             issue.repoName = repo.name;
             issue.repoID = repo.zenhubID;
-            issue.events = await this.api.getZenhubEvents(
-              repo.zenhubID,
-              issue.issue_number,
-            );
+            issue.events = await this.api.getZenhubEvents({
+              repo,
+              issue,
+            });
 
             // find the matching issue from Github, to get the title etc
             const foundRepo = this.githubIssues.find(
@@ -133,4 +133,4 @@ class Data {
 }
 /* eslint-enable no-restricted-syntax */
 
-export default Data;
+export { Data };
