@@ -1,4 +1,4 @@
-import { capitalize } from "../util";
+import { formatIndentedTicketRow } from "./format";
 
 // TODO (dormerod): make reports configurable (not just hardcoded "In Progress")
 // TODO (dormerod): add logic for emptry columns (i.e. nothing in progress)
@@ -8,8 +8,7 @@ const stocks = function reportStocks(issues) {
   workingIssues.forEach(issue => {
     // TODO (dormerod): this if statement hides PRs from report -- fix properly
     if (issue.title) {
-      workingReport = `${workingReport}
-  * ${capitalize(issue.title)}`;
+      workingReport = `${workingReport}${formatIndentedTicketRow(issue)}`;
     }
   });
 
@@ -17,8 +16,7 @@ const stocks = function reportStocks(issues) {
   let testingReport = "Currently testing:";
   testingIssues.forEach(issue => {
     if (issue.title) {
-      testingReport = `${testingReport}
-  * ${capitalize(issue.title)}`;
+      testingReport = `${testingReport}${formatIndentedTicketRow(issue)}`;
     }
   });
 
