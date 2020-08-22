@@ -4,7 +4,7 @@ import { Time } from "./time";
 
 const kb = function kannedBananas() {
   const time = new Time({
-    period: "day",
+    period: "week",
   });
 
   data
