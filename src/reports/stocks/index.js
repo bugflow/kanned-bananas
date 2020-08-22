@@ -2,7 +2,7 @@ import { reportByColumn } from "./filter";
 
 // TODO (dormerod): make reports configurable (not just hardcoded "In Progress")
 // TODO (dormerod): add logic for emptry columns (i.e. nothing in progress)
-const stocks = function reportStocks(issues) {
+function stocks(issues) {
   const workingReport = reportByColumn({
     reportTitle: "Currently working on",
     columnName: "In Progress",
@@ -21,6 +21,6 @@ const stocks = function reportStocks(issues) {
   };
 
   return reports;
-};
+}
 
 export { stocks };

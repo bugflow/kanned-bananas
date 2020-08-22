@@ -1,6 +1,6 @@
 import { formatReportSection } from "../format";
 
-const flows = function gatherFlows({ time, issues }) {
+function flows({ time, issues }) {
   const flowTypes = [
     {
       from: [
@@ -116,6 +116,6 @@ const flows = function gatherFlows({ time, issues }) {
   };
 
   return reports;
-};
+}
 
 export { flows };

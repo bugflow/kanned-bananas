@@ -1,9 +1,9 @@
-const capitalize = function capitalizeFirstLetterOfString(string) {
+function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
-};
+}
 
-const sleep = function sleepForMilliseconds(ms) {
+function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
-};
+}
 
 export { capitalize, sleep };

@@ -1,7 +1,7 @@
 import { stocks } from "./stocks";
 import { flows } from "./flows";
 
-const dailySummary = function dailySummaryReport({ time, issues }) {
+function dailySummary({ time, issues }) {
   const { summaryReport, doneReport } = flows({ time, issues });
   const { workingReport, testingReport } = stocks(issues);
 
@@ -18,6 +18,6 @@ ${testingReport}
 `;
 
   return summary;
-};
+}
 
 export { dailySummary };

@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import fs from "fs";
 
-const getConfig = function getKannedBananasConfig() {
+function getConfig() {
   const kbConfigFile = "./kb.config.json";
   dotenv.config();
 
@@ -17,6 +17,6 @@ const getConfig = function getKannedBananasConfig() {
   config.githubEndpoint = "https://api.github.com/graphql";
 
   return config;
-};
+}
 
 export default getConfig;

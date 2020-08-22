@@ -1,4 +1,4 @@
-const duration = function durationFromPeriod(period) {
+function duration(period) {
   let result;
 
   switch (period) {
@@ -23,6 +23,6 @@ const duration = function durationFromPeriod(period) {
   }
 
   return result;
-};
+}
 
 export default duration;
