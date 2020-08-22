@@ -21,7 +21,7 @@ function formatIndentedTicketRow(issue) {
 }
 /* eslint-enable camelcase */
 
-function formatReportSection(reportTitle, issues) {
+function formatReportSection({ reportTitle, issues }) {
   let report = `${reportTitle}:`;
   issues.forEach(issue => {
     // TODO (dormerod): this if statement hides PRs from report -- fix properly

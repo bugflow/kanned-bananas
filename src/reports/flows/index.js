@@ -1,4 +1,4 @@
-import { formatReportSection } from "./format";
+import { formatReportSection } from "../format";
 
 const flows = function gatherFlows({ time, issues }) {
   const flowTypes = [
@@ -105,10 +105,10 @@ const flows = function gatherFlows({ time, issues }) {
     summaryReport += summary;
   });
 
-  const doneReport = formatReportSection(
-    "Tickets completed",
-    flowEvents.Completed,
-  );
+  const doneReport = formatReportSection({
+    reportTitle: "Tickets completed",
+    issues: flowEvents.Completed,
+  });
 
   const reports = {
     summaryReport,
