@@ -21,4 +21,22 @@ function formatIndentedTicketRow(issue) {
 }
 /* eslint-enable camelcase */
 
-export { formatTitle, formatReference, formatTicket, formatIndentedTicketRow };
+function formatReportSection(reportTitle, issues) {
+  let report = `${reportTitle}:`;
+  issues.forEach(issue => {
+    // TODO (dormerod): this if statement hides PRs from report -- fix properly
+    if (issue.title) {
+      report = `${report}${formatIndentedTicketRow(issue)}`;
+    }
+  });
+
+  return report;
+}
+
+export {
+  formatTitle,
+  formatReference,
+  formatTicket,
+  formatIndentedTicketRow,
+  formatReportSection,
+};

@@ -1,4 +1,4 @@
-import { formatIndentedTicketRow } from "./format";
+import { formatReportSection } from "./format";
 
 const flows = function gatherFlows({ time, issues }) {
   const flowTypes = [
@@ -105,12 +105,10 @@ const flows = function gatherFlows({ time, issues }) {
     summaryReport += summary;
   });
 
-  let doneReport = "Tickets completed:";
-  flowEvents.Completed.forEach(issue => {
-    if (issue.title) {
-      doneReport = `${doneReport}${formatIndentedTicketRow(issue)}`;
-    }
-  });
+  const doneReport = formatReportSection(
+    "Tickets completed",
+    flowEvents.Completed,
+  );
 
   const reports = {
     summaryReport,
