@@ -117,6 +117,7 @@ class API {
     };
     const endpoint = `https://api.zenhub.com/p1/repositories/${repo.zenhubID}/issues/${issue.issue_number}/events`;
 
+    // TODO (dormerod): add some robust error handling here
     const response = await this.get(headers, endpoint);
     return response;
   }

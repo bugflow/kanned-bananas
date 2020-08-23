@@ -84,7 +84,7 @@ class Data {
             issue.column = column.name;
             issue.repoName = repo.name;
             issue.repoID = repo.zenhubID;
-            issue.events = await this.api.getZenhubEvents({
+            issue.events = await this.cache.ZenhubEvents({
               repo,
               issue,
             });

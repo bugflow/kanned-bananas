@@ -1,8 +1,14 @@
 import { DateTime } from "luxon";
 
 class Cache {
-  constructor({ fs, readFile, file = "data.json", directory = "./.cache/" }) {
-    Object.assign(this, { fs, readFile, file, directory });
+  constructor({
+    api,
+    fs,
+    readFile,
+    file = "data.json",
+    directory = "./.cache/",
+  }) {
+    Object.assign(this, { api, fs, readFile, file, directory });
 
     this.path = `${directory}${file}`;
     this.data = null;
@@ -55,6 +61,18 @@ class Cache {
     } catch (e) {
       console.error(e);
     }
+  }
+
+  async ZenhubEvents({ repo, issue }) {
+    let events;
+
+    try {
+      events = await this.api.getZenhubEvents({ repo, issue });
+    } catch (e) {
+      console.error(e);
+    }
+
+    return events;
   }
 }
 
