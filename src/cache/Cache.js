@@ -1,5 +1,3 @@
-import { DateTime } from "luxon";
-
 class Cache {
   constructor({
     api,
@@ -21,10 +19,8 @@ class Cache {
       this.data = JSON.parse(data);
 
       if (this.data.lastUpdated) {
-        const timeLastUpdated = DateTime.fromISO(this.data.lastUpdated);
-
         // if the reporting window is before the cache last updated time...
-        if (time.isBefore(timeLastUpdated)) return true;
+        if (time.isBeforeEnd(this.data.lastUpdated)) return true;
       }
     }
 

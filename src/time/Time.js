@@ -87,8 +87,16 @@ class Time {
     return false;
   }
 
-  isBefore(dateTime) {
-    if (dateTime && this.range.end <= dateTime) return true;
+  isBeforeStart(timestamp) {
+    const timeToCompare = DateTime.fromISO(timestamp);
+    if (timeToCompare && this.range.start <= timeToCompare) return true;
+
+    return false;
+  }
+
+  isBeforeEnd(timestamp) {
+    const timeToCompare = DateTime.fromISO(timestamp);
+    if (timeToCompare && this.range.end <= timeToCompare) return true;
 
     return false;
   }
