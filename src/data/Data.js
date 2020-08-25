@@ -89,7 +89,7 @@ class Data {
             if (ignoredColumns.includes(column.name)) break;
 
             // only care about closed tickets if they're in the reporting range
-            if (column.id !== "closed" || time.isBeforeStart(issue.closedAt)) {
+            if (column.id !== "closed" || time.isAfterStart(issue.closedAt)) {
               issue.column = column.name;
               issue.repoName = repo.name;
               issue.repoID = repo.zenhubID;

@@ -87,14 +87,14 @@ class Time {
     return false;
   }
 
-  isBeforeStart(timestamp) {
+  isAfterStart(timestamp) {
     const timeToCompare = DateTime.fromISO(timestamp);
     if (timeToCompare && this.range.start <= timeToCompare) return true;
 
     return false;
   }
 
-  isBeforeEnd(timestamp) {
+  isAfterEnd(timestamp) {
     const timeToCompare = DateTime.fromISO(timestamp);
     if (timeToCompare && this.range.end <= timeToCompare) return true;
 

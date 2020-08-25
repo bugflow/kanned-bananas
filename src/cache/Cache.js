@@ -19,8 +19,8 @@ class Cache {
       this.data = JSON.parse(data);
 
       if (this.data.lastUpdated) {
-        // if the reporting window is before the cache last updated time...
-        if (time.isBeforeEnd(this.data.lastUpdated)) return true;
+        // if the reporting window ends before the cache last updated time...
+        if (time.isAfterEnd(this.data.lastUpdated)) return true;
       }
     }
 
