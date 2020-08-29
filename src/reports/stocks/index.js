@@ -1,21 +1,47 @@
-import { reportByColumn } from "./filter";
+import getStockTypes from "../../states/stocks/get-stocks";
+import { summariseByColumn, reportByColumn } from "./filter";
 
 // TODO (dormerod): make reports configurable (not just hardcoded "In Progress")
 // TODO (dormerod): add logic for emptry columns (i.e. nothing in progress)
 function stocks(issues) {
+  const stockTypes = getStockTypes();
+
+  const stockSummary = `Summary of upcoming work (number of tickets):
+  ${summariseByColumn(
+    stockTypes.backlog.description,
+    stockTypes.backlog.columns,
+    issues,
+  )}
+  ${summariseByColumn(
+    stockTypes.failed.description,
+    stockTypes.failed.columns,
+    issues,
+  )}
+  ${summariseByColumn(
+    stockTypes.wip.description,
+    stockTypes.wip.columns,
+    issues,
+  )}
+  ${summariseByColumn(
+    stockTypes.review.description,
+    stockTypes.review.columns,
+    issues,
+  )}`;
+
   const workingReport = reportByColumn({
-    reportTitle: "Currently working on",
-    columnName: "In Progress",
+    reportTitle: stockTypes.wip.title,
+    columns: stockTypes.wip.columns,
     issues,
   });
 
   const testingReport = reportByColumn({
-    reportTitle: "Currently testing",
-    columnName: "Review/QA",
+    reportTitle: stockTypes.review.title,
+    columns: stockTypes.review.columns,
     issues,
   });
 
   const reports = {
+    stockSummary,
     workingReport,
     testingReport,
   };

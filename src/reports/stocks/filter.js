@@ -1,7 +1,15 @@
 import { formatReportSection } from "../format";
 
-function reportByColumn({ reportTitle, columnName, issues }) {
-  const filteredIssues = issues.filter(issue => issue.column === columnName);
+function summariseByColumn(description, columns, issues) {
+  const filteredIssues = issues.filter(issue => columns.includes(issue.column));
+
+  const summary = `${description}: ${filteredIssues.length}`;
+
+  return summary;
+}
+
+function reportByColumn({ reportTitle, columns, issues }) {
+  const filteredIssues = issues.filter(issue => columns.includes(issue.column));
   let report;
 
   if (filteredIssues.length > 0) {
@@ -14,4 +22,4 @@ function reportByColumn({ reportTitle, columnName, issues }) {
   return report;
 }
 
-export { reportByColumn };
+export { summariseByColumn, reportByColumn };
