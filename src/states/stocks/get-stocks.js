@@ -30,6 +30,12 @@ function getStockTypes() {
     description: "To test",
   };
 
+  stocks.uat = {
+    columns: [...columns.uat],
+    title: "Currently awaiting UAT",
+    description: "Ready for UAT",
+  };
+
   return stocks;
 }
 

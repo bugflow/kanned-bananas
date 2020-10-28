@@ -11,6 +11,11 @@ function flows({ time, issues }) {
     summaryReport += summary;
   });
 
+  const uatReport = formatReportSection({
+    reportTitle: "Work queued for UAT",
+    issues: flowEvents["Queued for UAT"],
+  });
+
   const doneReport = formatReportSection({
     reportTitle: "Work completed",
     issues: flowEvents.Completed,
@@ -18,6 +23,7 @@ function flows({ time, issues }) {
 
   const reports = {
     summaryReport,
+    uatReport,
     doneReport,
   };
 

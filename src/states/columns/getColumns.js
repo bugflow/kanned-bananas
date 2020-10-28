@@ -23,6 +23,7 @@ function getColumns() {
     ...columns.wip,
     ...columns.review,
   ];
+  columns.uat = ["UAT"];
   columns.done = ["Done", "Closed"];
 
   return columns;

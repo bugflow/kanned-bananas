@@ -26,6 +26,11 @@ function stocks(issues) {
     stockTypes.review.description,
     stockTypes.review.columns,
     issues,
+  )}
+  ${summariseByColumn(
+    stockTypes.uat.description,
+    stockTypes.uat.columns,
+    issues,
   )}`;
 
   const workingReport = reportByColumn({

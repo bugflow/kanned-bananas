@@ -49,6 +49,13 @@ function getFlowTypes() {
   });
 
   flows.push({
+    type: "uat",
+    from: [],
+    to: [...columns.uat],
+    description: "Queued for UAT",
+  });
+
+  flows.push({
     type: "completed",
     from: [],
     to: [...columns.done],
