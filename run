@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+mv .cache/$@.json .cache/data.json  2> /dev/null
+rm kb.config.json 2> /dev/null
+ln -s $@.kb.config.json kb.config.json
+yarn
+yarn go
+mv .cache/data.json .cache/$@.json 2> /dev/null
+

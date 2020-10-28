@@ -1,6 +1,6 @@
-# Project specific folders
+# Project specific files and folders
 .cache/
-kb.config.json
+*kb.config.json
 
 # Distribution / packaging
 dist/
