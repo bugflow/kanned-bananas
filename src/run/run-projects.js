@@ -4,6 +4,7 @@ import cache from "../cache";
 import { Data } from "../data";
 import { dailySummary } from "../reports";
 import { Time } from "../time";
+import { makeLabelFilter } from "../preprocessing";
 
 async function runProjects() {
   // eslint-disable-next-line no-restricted-syntax
@@ -17,7 +18,14 @@ async function runProjects() {
 
     try {
       const projectData = await data.load({ project, time });
-      console.log(dailySummary({ time, issues: projectData.zenhubIssues }));
+
+      // apply label filters
+      const includedLabels = [];
+      const excludedLabels = [/^duplicate$/, /^overtaken$/];
+      const filterByLabel = makeLabelFilter({ includedLabels, excludedLabels });
+      const issues = projectData.zenhubIssues.filter(filterByLabel);
+
+      console.log(dailySummary({ time, issues }));
     } catch (e) {
       console.error(e);
     }
