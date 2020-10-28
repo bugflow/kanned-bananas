@@ -114,8 +114,12 @@ class Data {
               }
 
               if (foundIssue) {
-                // if we found the Github issue, add issue close events and title
+                // if we found the Github issue add title, labels & close events
                 issue.title = foundIssue.node.title;
+                issue.labels = foundIssue.node.labels.edges.map(
+                  edge => edge.node.name,
+                );
+
                 if (foundIssue.node.closed) {
                   issue.events.push({
                     user_id: null,

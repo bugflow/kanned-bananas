@@ -31,9 +31,15 @@ class API {
               node {
                 number
                 title
+                labels(first: 10) {
+                  edges {
+                    node{
+                      name
+                    }
+                  }
+                }
                 closed
                 closedAt
-                createdAt
               }
             }
             pageInfo {
