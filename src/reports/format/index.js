@@ -1,7 +1,7 @@
-import { capitalize } from "../../util";
+import { capitalize, tidyString } from "../../util";
 
 function formatTitle({ title }) {
-  return capitalize(title);
+  return capitalize(tidyString(title));
 }
 
 /* eslint-disable camelcase */

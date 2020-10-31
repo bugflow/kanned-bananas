@@ -6,4 +6,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export { capitalize, sleep };
+function tidyString(string) {
+  // remove whitespace and weird punctuation
+  const tidied = string
+    .trim()
+    .replace(/^(\.|,|;|:|\*)/) // remove leading punctuation
+    .replace(/(\.|,|;|:|\*)$/) // remove trailing punctuation
+    .trim();
+  return tidied;
+}
+
+export { capitalize, sleep, tidyString };
