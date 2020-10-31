@@ -21,7 +21,7 @@ async function runProjects() {
 
       // apply label filters
       const includedLabels = [];
-      const excludedLabels = [/^duplicate$/, /^overtaken$/];
+      const excludedLabels = [/^duplicate$/, /^exclude$/, /^overtaken$/];
       const filterByLabel = makeLabelFilter({ includedLabels, excludedLabels });
       const issues = projectData.zenhubIssues.filter(filterByLabel);
 
