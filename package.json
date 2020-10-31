@@ -1,6 +1,6 @@
 {
   "name": "kanned-bananas",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tools to help manage and report on projects using kanban",
   "homepage": "https://github.com/bugflow/kanned-bananas",
   "repository": "git@github.com:bugflow/kanned-bananas.git",
