@@ -7,31 +7,27 @@ function stocks(issues) {
   const stockTypes = getStockTypes();
 
   const stockSummary = `Summary of upcoming work (number of tickets):
-  ${summariseByColumn(
-    stockTypes.backlog.description,
-    stockTypes.backlog.columns,
-    issues,
-  )}
-  ${summariseByColumn(
-    stockTypes.failed.description,
-    stockTypes.failed.columns,
-    issues,
-  )}
-  ${summariseByColumn(
-    stockTypes.wip.description,
-    stockTypes.wip.columns,
-    issues,
-  )}
-  ${summariseByColumn(
-    stockTypes.review.description,
-    stockTypes.review.columns,
-    issues,
-  )}
-  ${summariseByColumn(
-    stockTypes.uat.description,
-    stockTypes.uat.columns,
-    issues,
-  )}`;
+${summariseByColumn(
+  stockTypes.backlog.description,
+  stockTypes.backlog.columns,
+  issues,
+)}
+${summariseByColumn(
+  stockTypes.failed.description,
+  stockTypes.failed.columns,
+  issues,
+)}
+${summariseByColumn(stockTypes.wip.description, stockTypes.wip.columns, issues)}
+${summariseByColumn(
+  stockTypes.review.description,
+  stockTypes.review.columns,
+  issues,
+)}
+${summariseByColumn(
+  stockTypes.uat.description,
+  stockTypes.uat.columns,
+  issues,
+)}`.replace(/(\n){2,}/g, "\n"); // remove empty lines between statuses
 
   const workingReport = reportByColumn({
     reportTitle: stockTypes.wip.title,

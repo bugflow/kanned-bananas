@@ -1,9 +1,12 @@
 import { formatReportSection } from "../format";
 
 function summariseByColumn(description, columns, issues) {
-  const filteredIssues = issues.filter(issue => columns.includes(issue.column));
+  let summary = "";
 
-  const summary = `${description}: ${filteredIssues.length}`;
+  const filteredIssues = issues.filter(issue => columns.includes(issue.column));
+  if (filteredIssues.length > 0) {
+    summary = `  ${description}: ${filteredIssues.length}`;
+  }
 
   return summary;
 }
