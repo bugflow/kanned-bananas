@@ -7,7 +7,7 @@ function dailySummary({ time, issues }) {
   const { stockSummary, workingReport, testingReport } = stocks(issues);
   const { blockedReport } = labels(issues);
 
-  const summary = `
+  let summary = `
 ${time.description()}
 
 ${summaryReport}
@@ -24,6 +24,9 @@ ${workingReport}
 
 ${testingReport}
 `;
+
+  // tidy up three or more consecutive line breaks (should be two at most)
+  summary = summary.replace(/(\n){3,}/g, "\n\n");
 
   return summary;
 }

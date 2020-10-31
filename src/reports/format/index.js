@@ -22,13 +22,17 @@ function formatIndentedTicketRow(issue) {
 /* eslint-enable camelcase */
 
 function formatReportSection({ reportTitle, issues }) {
-  let report = `${reportTitle}:`;
-  issues.forEach(issue => {
-    // TODO (dormerod): this if statement hides PRs from report -- fix properly
-    if (issue.title) {
-      report = `${report}${formatIndentedTicketRow(issue)}`;
-    }
-  });
+  let report = "";
+
+  if (issues.length > 0) {
+    report = `${reportTitle}:`;
+    issues.forEach(issue => {
+      // TODO (dormerod): this if statement hides PRs from report -- fix properly
+      if (issue.title) {
+        report = `${report}${formatIndentedTicketRow(issue)}`;
+      }
+    });
+  }
 
   return report;
 }
