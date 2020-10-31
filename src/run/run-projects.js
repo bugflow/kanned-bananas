@@ -4,7 +4,7 @@ import cache from "../cache";
 import { Data } from "../data";
 import { dailySummary } from "../reports";
 import { Time } from "../time";
-import { makeLabelFilter } from "../preprocessing";
+import { makeLabelFilter } from "../states/labels";
 
 async function runProjects() {
   // eslint-disable-next-line no-restricted-syntax

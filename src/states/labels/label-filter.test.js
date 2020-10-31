@@ -1,5 +1,5 @@
-import testData from "./labels.test.json";
-import { makeLabelFilter } from "./labels";
+import testData from "./label-filter.test.json";
+import { makeLabelFilter } from "./label-filter";
 
 describe("Include issues by label", () => {
   it("should be able to include using a single label/regex", () => {

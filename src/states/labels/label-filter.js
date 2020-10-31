@@ -1,4 +1,4 @@
-function makeLabelFilter({ includedLabels, excludedLabels }) {
+function makeLabelFilter({ includedLabels = [], excludedLabels = [] }) {
   // create a callback function for the Array.prototype.filter method
   // curry the included/excluded labels because filter only passes one argument
   function filterByLabel(issue) {
