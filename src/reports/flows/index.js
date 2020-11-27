@@ -12,8 +12,8 @@ function flows({ time, issues }) {
   });
 
   const uatReport = formatReportSection({
-    reportTitle: "Work queued for UAT",
-    issues: flowEvents["Queued for UAT"],
+    reportTitle: "Work added to UAT queue",
+    issues: flowEvents["Added to UAT queue"],
   });
 
   const doneReport = formatReportSection({

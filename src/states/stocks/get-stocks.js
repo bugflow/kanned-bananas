@@ -33,7 +33,7 @@ function getStockTypes() {
   stocks.uat = {
     columns: [...columns.uat],
     title: "Currently awaiting UAT",
-    description: "Ready for UAT",
+    description: "Awaiting UAT",
   };
 
   return stocks;
