@@ -4,10 +4,11 @@ import { formatReportSection } from "../format";
 function flows({ time, issues }) {
   const flowEvents = gatherFlowEvents(time, issues);
 
-  let summaryReport = "Summary of work done (number of tickets):";
+  let summaryReport = "### Summary of work done (number of tickets)";
   Object.entries(flowEvents).forEach(([event, eventIssues]) => {
     let summary = "";
-    if (eventIssues.length > 0) summary = `\n  ${event}: ${eventIssues.length}`;
+    if (eventIssues.length > 0)
+      summary = `\n  * ${event}: ${eventIssues.length}`;
     summaryReport += summary;
   });
 

@@ -25,7 +25,7 @@ async function runProjects() {
       const filterByLabel = makeLabelFilter({ includedLabels, excludedLabels });
       const issues = projectData.zenhubIssues.filter(filterByLabel);
 
-      console.log(dailySummary({ time, issues }));
+      console.log(dailySummary({ time, issues, project }));
     } catch (e) {
       console.error(e);
     }

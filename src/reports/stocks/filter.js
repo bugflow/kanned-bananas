@@ -5,7 +5,7 @@ function summariseByColumn(description, columns, issues) {
 
   const filteredIssues = issues.filter(issue => columns.includes(issue.column));
   if (filteredIssues.length > 0) {
-    summary = `  ${description}: ${filteredIssues.length}`;
+    summary = `  * ${description}: ${filteredIssues.length}`;
   }
 
   return summary;

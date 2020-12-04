@@ -25,7 +25,7 @@ function formatReportSection({ reportTitle, issues }) {
   let report = "";
 
   if (issues.length > 0) {
-    report = `${reportTitle}:`;
+    report = `### ${reportTitle}`;
     issues.forEach(issue => {
       // TODO (dormerod): this if statement hides PRs from report -- fix properly
       if (issue.title) {

@@ -31,7 +31,7 @@ describe("Formatting helpers for reports", () => {
 describe("Report section formatting", () => {
   it("should output each section of a report, with title and ticket list", () => {
     expect(formatReportSection({ reportTitle: "Section title", issues })).toBe(
-      `Section title:
+      `### Section title
   * Test title (test-repo #1)
   * Another title (test-repo #2)`,
     );

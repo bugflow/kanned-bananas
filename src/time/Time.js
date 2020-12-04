@@ -35,12 +35,12 @@ class Time {
     }
 
     this.range = Interval.fromDateTimes(start, end);
+    this.now = DateTime.local();
   }
 
   description() {
-    const now = DateTime.local();
-    const timeSinceStart = Interval.fromDateTimes(this.range.start, now);
-    const timeSinceEnd = Interval.fromDateTimes(this.range.end, now);
+    const timeSinceStart = Interval.fromDateTimes(this.range.start, this.now);
+    const timeSinceEnd = Interval.fromDateTimes(this.range.end, this.now);
 
     // date formatting
     const formatWeekday = "cccc";
@@ -56,23 +56,23 @@ class Time {
       if (timeSinceEnd.length("days") <= 1) {
         // report ends within the last 24 hours
         if (this.range.start.toFormat("H") < 12) {
-          rangeDescription = `Since ${weekday} morning...`;
+          rangeDescription = `Since ${weekday} morning`;
         } else {
-          rangeDescription = `Since ${weekday} afternoon...`;
+          rangeDescription = `Since ${weekday} afternoon`;
         }
       } else if (this.range.length("days") <= 1) {
         // more than 24 hours ago, but the reporting period is a day or less
-        rangeDescription = `On ${weekday}...`;
+        rangeDescription = `On ${weekday}`;
       } else {
         // more than 24 hours ago and more than one day
-        rangeDescription = `From ${startDate} to ${endDate}...`;
+        rangeDescription = `From ${startDate} to ${endDate}`;
       }
     } else if (this.range.length("days") <= 1) {
       // more than a week ago, but the reporting period is a day or less
-      rangeDescription = `On ${startDate}...`;
+      rangeDescription = `On ${startDate}`;
     } else {
       // more than a week ago
-      rangeDescription = `From ${startDate} to ${endDate}...`;
+      rangeDescription = `From ${startDate} to ${endDate}`;
     }
 
     return rangeDescription;
@@ -99,6 +99,13 @@ class Time {
     if (timeToCompare && this.range.end <= timeToCompare) return true;
 
     return false;
+  }
+
+  today() {
+    const formatWeekdayDayMonthYear = "cccc d LLLL yyyy";
+    const date = this.now.toFormat(formatWeekdayDayMonthYear);
+
+    return date;
   }
 }
 

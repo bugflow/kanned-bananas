@@ -2,13 +2,29 @@ import { stocks } from "./stocks";
 import { flows } from "./flows";
 import { labels } from "./labels";
 
-function dailySummary({ time, issues }) {
+function dailySummary({ time, issues, project }) {
   const { summaryReport, uatReport, doneReport } = flows({ time, issues });
   const { stockSummary, workingReport, testingReport } = stocks(issues);
   const { blockedReport } = labels(issues);
 
   const summary = `
-${time.description()}
+# ${project.title} – Delivery Report
+
+## ${project.subtitle}
+
+**Report generated on:** ${time.today()}
+
+---
+
+## Requiring your attention
+
+${blockedReport}
+
+---
+
+## Completed
+
+_${time.description()}_
 
 ${summaryReport}
 
@@ -16,7 +32,9 @@ ${uatReport}
 
 ${doneReport}
 
-${blockedReport}
+---
+
+## Next
 
 ${stockSummary}
 

@@ -6,7 +6,7 @@ import { summariseByColumn, reportByColumn } from "./filter";
 function stocks(issues) {
   const stockTypes = getStockTypes();
 
-  const stockSummary = `Summary of upcoming work (number of tickets):
+  const stockSummary = `### Summary of upcoming work (number of tickets)
 ${summariseByColumn(
   stockTypes.backlog.description,
   stockTypes.backlog.columns,

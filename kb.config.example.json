@@ -1,7 +1,8 @@
 {
   "projects": [
     {
-      "name": "Castles in the sky",
+      "title": "Castles in the sky",
+      "subtitle": "Castles Pty Ltd",
       "zenhubWorkspaceID": "11235813",
       "repos": [
         {
