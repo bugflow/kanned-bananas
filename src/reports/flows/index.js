@@ -17,6 +17,11 @@ function flows({ time, issues }) {
     issues: flowEvents["Added to UAT queue"],
   });
 
+  const overdeliveryReport = formatReportSection({
+    reportTitle: "Work which exceeded the sprint goals",
+    issues: flowEvents["Exceeded sprint goals"],
+  });
+
   const doneReport = formatReportSection({
     reportTitle: "Work completed",
     issues: flowEvents.Completed,
@@ -25,6 +30,7 @@ function flows({ time, issues }) {
   const reports = {
     summaryReport,
     uatReport,
+    overdeliveryReport,
     doneReport,
   };
 

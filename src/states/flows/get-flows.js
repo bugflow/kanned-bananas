@@ -1,4 +1,4 @@
-import getColumns from "../columns/getColumns";
+import getColumns from "../columns/get-columns";
 
 const columns = getColumns();
 
@@ -22,14 +22,21 @@ function getFlowTypes() {
 
   flows.push({
     type: "started",
-    from: [...columns.allBacklogs],
+    from: [...columns.currentBacklogs],
     to: [...columns.wip],
     description: "Started",
   });
 
   flows.push({
+    type: "exceeded",
+    from: [...columns.outScope, ...columns.futureBacklogs],
+    to: [...columns.active],
+    description: "Exceeded sprint goals",
+  });
+
+  flows.push({
     type: "developed",
-    from: [...columns.allBacklogs, ...columns.wip],
+    from: [...columns.currentBacklogs, ...columns.wip],
     to: [...columns.review],
     description: "Developed",
   });

@@ -3,41 +3,37 @@ import getFlowTypes from "./get-flows";
 const mockFlowTypes = {
   decrease: {
     type: "decrease",
-    from: [
-      "Backlog",
-      "Product Backlog",
-      "Sprint Backlog",
-      "Failed QA",
-      "In Progress",
-      "Review",
-      "Review/QA",
-    ],
+    from: ["Product Backlog", "Sprint Planning", "Backlog", "Sprint Backlog"],
     to: ["New Issues", "Icebox", "Some Future Sprint"],
     description: "Scope decrease",
   },
   increase: {
     type: "increase",
     from: ["New Issues", "Icebox", "Some Future Sprint"],
-    to: [
-      "Backlog",
-      "Product Backlog",
-      "Sprint Backlog",
-      "Failed QA",
-      "In Progress",
-      "Review",
-      "Review/QA",
-    ],
+    to: ["Product Backlog", "Sprint Planning", "Backlog", "Sprint Backlog"],
     description: "Scope increase",
   },
   started: {
     type: "started",
-    from: ["Backlog", "Product Backlog", "Sprint Backlog"],
+    from: ["Backlog", "Sprint Backlog"],
     to: ["In Progress"],
     description: "Started",
   },
+  exceeded: {
+    type: "exceeded",
+    from: [
+      "New Issues",
+      "Icebox",
+      "Some Future Sprint",
+      "Product Backlog",
+      "Sprint Planning",
+    ],
+    to: ["Failed QA", "In Progress", "Review", "Review/QA"],
+    description: "Exceeded sprint goals",
+  },
   developed: {
     type: "developed",
-    from: ["Backlog", "Product Backlog", "Sprint Backlog", "In Progress"],
+    from: ["Backlog", "Sprint Backlog", "In Progress"],
     to: ["Review", "Review/QA"],
     description: "Developed",
   },
@@ -75,6 +71,11 @@ describe("Flow types and descriptions", () => {
   it("Should know what a ticket that's been started looks like", () => {
     expect(getFlowTypes().find(item => item.type === "started")).toStrictEqual(
       mockFlowTypes.started,
+    );
+  });
+  it("Should know what exceeding the sprint goals looks like", () => {
+    expect(getFlowTypes().find(item => item.type === "exceeded")).toStrictEqual(
+      mockFlowTypes.exceeded,
     );
   });
   it("Should know what a ticket that's been developed looks like", () => {

@@ -1,4 +1,4 @@
-import getColumns from "../../states/columns/getColumns";
+import getColumns from "../../states/columns/get-columns";
 import { makeLabelFilter } from "../../states/labels";
 import { formatReportSection } from "../format";
 
@@ -6,7 +6,8 @@ function labels(issues) {
   // filter issues to only the relevant columns (e.g. not icebox, new or done)
   const columns = getColumns();
   const relevantColumns = [
-    ...columns.allBacklogs,
+    ...columns.futureBacklogs,
+    ...columns.currentBacklogs,
     ...columns.failed,
     ...columns.wip,
   ];

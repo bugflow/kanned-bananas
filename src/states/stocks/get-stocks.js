@@ -1,4 +1,4 @@
-import getColumns from "../columns/getColumns";
+import getColumns from "../columns/get-columns";
 
 const columns = getColumns();
 
@@ -7,7 +7,7 @@ function getStockTypes() {
   const stocks = {};
 
   stocks.backlog = {
-    columns: [...columns.allBacklogs],
+    columns: [...columns.futureBacklogs, ...columns.currentBacklogs],
     title: "Backlog",
     description: "To do",
   };

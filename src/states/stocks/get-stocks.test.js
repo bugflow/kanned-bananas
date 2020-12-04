@@ -2,7 +2,12 @@ import getStockTypes from "./get-stocks";
 
 const mockStockTypes = {
   backlog: {
-    columns: ["Backlog", "Product Backlog", "Sprint Backlog"],
+    columns: [
+      "Product Backlog",
+      "Sprint Planning",
+      "Backlog",
+      "Sprint Backlog",
+    ],
     title: "Backlog",
     description: "To do",
   },

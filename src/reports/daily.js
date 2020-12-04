@@ -3,7 +3,10 @@ import { flows } from "./flows";
 import { labels } from "./labels";
 
 function dailySummary({ time, issues, project }) {
-  const { summaryReport, uatReport, doneReport } = flows({ time, issues });
+  const { summaryReport, uatReport, overdeliveryReport, doneReport } = flows({
+    time,
+    issues,
+  });
   const { stockSummary, workingReport, testingReport } = stocks(issues);
   const { blockedReport } = labels(issues);
 
@@ -29,6 +32,8 @@ _${time.description()}_
 ${summaryReport}
 
 ${uatReport}
+
+${overdeliveryReport}
 
 ${doneReport}
 

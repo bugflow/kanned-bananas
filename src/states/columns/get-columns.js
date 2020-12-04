@@ -6,23 +6,17 @@ function getColumns() {
   columns.newIssues = ["New Issues"];
   columns.ice = ["Icebox", "Some Future Sprint"];
   columns.outScope = [...columns.newIssues, ...columns.ice];
-  columns.backlog = ["Backlog"];
   columns.product = ["Product Backlog"];
+  columns.nextSprint = ["Sprint Planning"];
+  columns.backlog = ["Backlog"];
   columns.sprint = ["Sprint Backlog"];
-  columns.allBacklogs = [
-    ...columns.backlog,
-    ...columns.product,
-    ...columns.sprint,
-  ];
+  columns.futureBacklogs = [...columns.product, ...columns.nextSprint];
+  columns.currentBacklogs = [...columns.backlog, ...columns.sprint];
   columns.failed = ["Failed QA"];
   columns.wip = ["In Progress"];
   columns.review = ["Review", "Review/QA"];
-  columns.inScope = [
-    ...columns.allBacklogs,
-    ...columns.failed,
-    ...columns.wip,
-    ...columns.review,
-  ];
+  columns.inScope = [...columns.futureBacklogs, ...columns.currentBacklogs];
+  columns.active = [...columns.failed, ...columns.wip, ...columns.review];
   columns.uat = ["UAT"];
   columns.done = ["Done", "Closed"];
 
