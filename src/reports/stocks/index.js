@@ -8,6 +8,11 @@ function stocks(issues) {
 
   const stockSummary = `### Summary of upcoming work (number of tickets)
 ${summariseByColumn(
+  stockTypes.planned.description,
+  stockTypes.planned.columns,
+  issues,
+)}
+${summariseByColumn(
   stockTypes.backlog.description,
   stockTypes.backlog.columns,
   issues,

@@ -3,15 +3,31 @@ import getFlowTypes from "./get-flows";
 const mockFlowTypes = {
   decrease: {
     type: "decrease",
-    from: ["Product Backlog", "Sprint Planning", "Backlog", "Sprint Backlog"],
+    from: [
+      "Goals",
+      "Long-term goals",
+      "Short-term goals",
+      "Product Backlog",
+      "Sprint Planning",
+      "Backlog",
+      "Sprint Backlog",
+    ],
     to: ["New Issues", "Icebox", "Some Future Sprint"],
     description: "Scope decrease",
   },
   increase: {
     type: "increase",
     from: ["New Issues", "Icebox", "Some Future Sprint"],
-    to: ["Product Backlog", "Sprint Planning", "Backlog", "Sprint Backlog"],
-    description: "Scope increase",
+    to: [
+      "Goals",
+      "Long-term goals",
+      "Short-term goals",
+      "Product Backlog",
+      "Sprint Planning",
+      "Backlog",
+      "Sprint Backlog",
+    ],
+    description: "Scope unpacked",
   },
   started: {
     type: "started",

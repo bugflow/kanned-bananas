@@ -17,7 +17,7 @@ function getFlowTypes() {
     type: "increase",
     from: [...columns.outScope],
     to: [...columns.inScope],
-    description: "Scope increase",
+    description: "Scope unpacked",
   });
 
   flows.push({

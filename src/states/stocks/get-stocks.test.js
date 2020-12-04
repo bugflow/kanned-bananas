@@ -1,14 +1,20 @@
 import getStockTypes from "./get-stocks";
 
 const mockStockTypes = {
-  backlog: {
+  planned: {
     columns: [
+      "Goals",
+      "Long-term goals",
+      "Short-term goals",
       "Product Backlog",
       "Sprint Planning",
-      "Backlog",
-      "Sprint Backlog",
     ],
-    title: "Backlog",
+    title: "Currently planned",
+    description: "Planned",
+  },
+  backlog: {
+    columns: ["Backlog", "Sprint Backlog"],
+    title: "Currently in backlog",
     description: "To do",
   },
   failed: {
@@ -29,6 +35,9 @@ const mockStockTypes = {
 };
 
 describe("Flow types and descriptions", () => {
+  it("Should know what planned tickets look like", () => {
+    expect(getStockTypes().planned).toStrictEqual(mockStockTypes.planned);
+  });
   it("Should know what backlog tickets look like", () => {
     expect(getStockTypes().backlog).toStrictEqual(mockStockTypes.backlog);
   });

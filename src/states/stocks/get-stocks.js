@@ -6,9 +6,15 @@ function getStockTypes() {
   // TODO (dormerod): add implied flows feature (for when columns are skipped)
   const stocks = {};
 
+  stocks.planned = {
+    columns: [...columns.planned],
+    title: "Currently planned",
+    description: "Planned",
+  };
+
   stocks.backlog = {
-    columns: [...columns.futureBacklogs, ...columns.currentBacklogs],
-    title: "Backlog",
+    columns: [...columns.currentBacklogs],
+    title: "Currently in backlog",
     description: "To do",
   };
 
