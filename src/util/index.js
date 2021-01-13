@@ -10,10 +10,13 @@ function tidyString(string) {
   // remove whitespace and weird punctuation
   const tidied = string
     .trim()
-    .replace(/^(\.|,|;|:|\*)/) // remove leading punctuation
-    .replace(/(\.|,|;|:|\*)$/) // remove trailing punctuation
+    .replace(/^(\.|,|;|:|\*)+/g, "") // remove leading punctuation
+    .replace(/(\.|,|;|:|\*)+$/g, "") // remove trailing punctuation
     .trim();
-  return tidied;
+
+  if (string !== tidied) return tidyString(tidied); // recurse until all tidy
+
+  return tidied; // return the tidied string once there's nothing else to tidy
 }
 
 export { capitalize, sleep, tidyString };
