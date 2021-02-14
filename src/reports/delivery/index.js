@@ -1,6 +1,6 @@
-import { stocks } from "./stocks";
-import { flows } from "./flows";
-import { labels } from "./labels";
+import { stocks } from "../stocks";
+import { flows } from "../flows";
+import { labels } from "../labels";
 
 function deliveryReport({ time, issues, project }) {
   const {

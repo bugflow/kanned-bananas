@@ -38,6 +38,9 @@ class API {
               node {
                 number
                 title
+                milestone {
+                  title
+                }
                 labels(first: 10) {
                   edges {
                     node{

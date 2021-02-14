@@ -1,5 +1,5 @@
 import getColumns from "../../states/columns/get-columns";
-import { makeLabelFilter } from "../../states/labels";
+import makePropertyFilter from "../../states/properties";
 import { formatReportSection } from "../format";
 
 function labels(issues) {
@@ -15,7 +15,7 @@ function labels(issues) {
   );
 
   // filter issues to include anything starting with "blocked"
-  const filterByLabel = makeLabelFilter({
+  const filterByLabel = makePropertyFilter({
     includedLabels: [/^blocked/],
     excludedLabels: [],
   });

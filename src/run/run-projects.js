@@ -2,14 +2,18 @@ import config from "../config";
 import api from "../api";
 import cache from "../cache";
 import { Data } from "../data";
-import { deliveryReport } from "../reports";
 import { Time } from "../time";
-import { makeLabelFilter } from "../states/labels";
+import makePropertyFilter from "../states/properties";
+import { deliveryReport, milestoneReport } from "../reports";
 
 async function runProjects() {
   // eslint-disable-next-line no-restricted-syntax
   for await (const project of config.projects) {
-    const time = new Time(project);
+    // TODO (dormerod): get project period and frequency from config
+    const time = new Time({
+      period: "quarter",
+    });
+
     const data = new Data({ api, cache, config });
 
     try {

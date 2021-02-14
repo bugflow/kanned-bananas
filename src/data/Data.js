@@ -115,8 +115,13 @@ class Data {
               }
 
               if (foundIssue) {
-                // if we found the Github issue add title, labels & close events
+                // if we found the Github issue add properties & close events
                 issue.title = foundIssue.node.title;
+
+                issue.milestone = foundIssue.node.milestone
+                  ? foundIssue.node.milestone.title
+                  : null;
+
                 issue.labels = foundIssue.node.labels.edges.map(
                   edge => edge.node.name,
                 );
