@@ -2,7 +2,7 @@ import config from "../config";
 import api from "../api";
 import cache from "../cache";
 import { Data } from "../data";
-import { dailySummary } from "../reports";
+import { deliveryReport } from "../reports";
 import { Time } from "../time";
 import { makeLabelFilter } from "../states/labels";
 
@@ -30,7 +30,7 @@ async function runProjects() {
       const filterByLabel = makeLabelFilter({ includedLabels, excludedLabels });
       const issues = projectData.zenhubIssues.filter(filterByLabel);
 
-      console.log(dailySummary({ time, issues, project }));
+      console.log(deliveryReport({ time, issues, project }));
     } catch (e) {
       console.error(e);
     }

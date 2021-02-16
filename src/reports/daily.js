@@ -2,12 +2,22 @@ import { stocks } from "./stocks";
 import { flows } from "./flows";
 import { labels } from "./labels";
 
-function dailySummary({ time, issues, project }) {
-  const { summaryReport, uatReport, overdeliveryReport, doneReport } = flows({
+function deliveryReport({ time, issues, project }) {
+  const {
+    summaryReport,
+    uatAddedReport,
+    overdeliveryReport,
+    doneReport,
+  } = flows({
     time,
     issues,
   });
-  const { stockSummary, workingReport, testingReport } = stocks(issues);
+  const {
+    stockSummary,
+    workingReport,
+    testingReport,
+    uatWaitingReport,
+  } = stocks(issues);
   const { blockedReport } = labels(issues);
 
   const summary = `
@@ -31,7 +41,7 @@ _${time.description()}_
 
 ${summaryReport}
 
-${uatReport}
+${uatAddedReport}
 
 ${overdeliveryReport}
 
@@ -46,9 +56,11 @@ ${stockSummary}
 ${workingReport}
 
 ${testingReport}
+
+${uatWaitingReport}
 `.replace(/(\n){3,}/g, "\n\n"); // tidy up three or more consecutive line breaks
 
   return summary;
 }
 
-export { dailySummary };
+export { deliveryReport };

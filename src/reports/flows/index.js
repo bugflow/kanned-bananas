@@ -12,9 +12,9 @@ function flows({ time, issues }) {
     summaryReport += summary;
   });
 
-  const uatReport = formatReportSection({
-    reportTitle: "Work added to UAT queue",
-    issues: flowEvents["Added to UAT queue"],
+  const uatAddedReport = formatReportSection({
+    reportTitle: "Work added to client review/UAT queue",
+    issues: flowEvents["Added to review/UAT"],
   });
 
   const overdeliveryReport = formatReportSection({
@@ -29,7 +29,7 @@ function flows({ time, issues }) {
 
   const reports = {
     summaryReport,
-    uatReport,
+    uatAddedReport,
     overdeliveryReport,
     doneReport,
   };

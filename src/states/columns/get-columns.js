@@ -19,7 +19,7 @@ function getColumns() {
   columns.wip = ["In Progress"];
   columns.review = ["Review", "Review/QA"];
   columns.active = [...columns.failed, ...columns.wip, ...columns.review];
-  columns.uat = ["UAT"];
+  columns.uat = ["UAT", "Review/UAT"];
   columns.done = ["Done", "Closed"];
 
   return columns;

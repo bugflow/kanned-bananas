@@ -46,10 +46,17 @@ ${summariseByColumn(
     issues,
   });
 
+  const uatWaitingReport = reportByColumn({
+    reportTitle: stockTypes.uat.title,
+    columns: stockTypes.uat.columns,
+    issues,
+  });
+
   const reports = {
     stockSummary,
     workingReport,
     testingReport,
+    uatWaitingReport,
   };
 
   return reports;

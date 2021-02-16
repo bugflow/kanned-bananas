@@ -59,7 +59,7 @@ function getFlowTypes() {
     type: "uat",
     from: [],
     to: [...columns.uat],
-    description: "Added to UAT queue",
+    description: "Added to review/UAT",
   });
 
   flows.push({

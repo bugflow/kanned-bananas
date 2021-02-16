@@ -32,9 +32,14 @@ const mockStockTypes = {
     title: "Currently testing",
     description: "To test",
   },
+  uat: {
+    columns: ["UAT", "Review/UAT"],
+    title: "Currently awaiting client review/UAT",
+    description: "Awaiting review/UAT",
+  },
 };
 
-describe("Flow types and descriptions", () => {
+describe("Stock types and descriptions", () => {
   it("Should know what planned tickets look like", () => {
     expect(getStockTypes().planned).toStrictEqual(mockStockTypes.planned);
   });
@@ -49,5 +54,8 @@ describe("Flow types and descriptions", () => {
   });
   it("Should know what tickets that are awaiting review look like", () => {
     expect(getStockTypes().review).toStrictEqual(mockStockTypes.review);
+  });
+  it("Should know what tickets that are awaiting UAT look like", () => {
+    expect(getStockTypes().uat).toStrictEqual(mockStockTypes.uat);
   });
 });

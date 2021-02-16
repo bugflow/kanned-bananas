@@ -30,7 +30,7 @@ const mockColumns = {
   wip: ["In Progress"],
   review: ["Review", "Review/QA"],
   active: ["Failed QA", "In Progress", "Review", "Review/QA"],
-  uat: ["UAT"],
+  uat: ["UAT", "Review/UAT"],
   done: ["Done", "Closed"],
 };
 
