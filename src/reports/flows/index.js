@@ -8,7 +8,7 @@ function flows({ time, issues }) {
   Object.entries(flowEvents).forEach(([event, eventIssues]) => {
     let summary = "";
     if (eventIssues.length > 0)
-      summary = `\n  * ${event}: ${eventIssues.length}`;
+      summary = `\n  - ${event}: ${eventIssues.length}`;
     summaryReport += summary;
   });
 

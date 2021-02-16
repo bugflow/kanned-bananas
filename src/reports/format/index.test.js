@@ -64,6 +64,9 @@ describe("Formatting helpers for reports", () => {
   it("should tidy up titles if they've already been prefixed", () => {
     expect(formatTitle(issues[1])).toBe("Epic: Another title");
   });
+  it("should appy formatting to prefixes when specified", () => {
+    expect(formatTitle(issues[3])).toBe("**Goal:** This one is important");
+  });
   it("should format issue references with repo name and ticket number", () => {
     expect(formatReference(issues[0])).toBe("test-repo #1");
   });
@@ -72,7 +75,7 @@ describe("Formatting helpers for reports", () => {
   });
   it("should format indented ticket rows on a new line with an asterisk", () => {
     expect(formatIndentedTicketRow(issues[0])).toBe(
-      "\n  * Test title (test-repo #1)",
+      "\n  - Test title (test-repo #1)",
     );
   });
 });
@@ -81,10 +84,10 @@ describe("Report section formatting", () => {
   it("should output each section of a report, with title and ticket list", () => {
     expect(formatReportSection({ reportTitle: "Section title", issues })).toBe(
       `### Section title
-  * Test title (test-repo #1)
-  * Epic: Another title (test-repo #2)
-  * Bug: Yet another title (test-repo #3)
-  * Goal: This one is important (test-repo #4)`,
+  - Test title (test-repo #1)
+  - Epic: Another title (test-repo #2)
+  - Bug: Yet another title (test-repo #3)
+  - **Goal:** This one is important (test-repo #4)`,
     );
   });
 });

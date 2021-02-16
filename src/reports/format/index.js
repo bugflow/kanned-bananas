@@ -25,6 +25,16 @@ function formatTitle({ labels, title }) {
     if (suffix.startsWith(prefix)) {
       suffix = suffix.slice(prefix.length).trim();
     }
+
+    // apply any special formatting to the prefix
+    switch (foundLabel.format) {
+      case "bold":
+        prefix = `**${prefix}**`;
+        break;
+
+      default:
+        break;
+    }
   }
 
   const output = `${prefix} ${capitalize(suffix)}`.trim();
@@ -45,7 +55,7 @@ function formatTicket({ labels, title, repoName, issue_number }) {
 }
 
 function formatIndentedTicketRow(issue) {
-  return `\n  * ${formatTicket(issue)}`;
+  return `\n  - ${formatTicket(issue)}`;
 }
 /* eslint-enable camelcase */
 
