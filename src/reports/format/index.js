@@ -1,7 +1,35 @@
 import { capitalize, tidyString } from "../../util";
+import keyLabels from "./labels";
 
-function formatTitle({ title }) {
-  return capitalize(tidyString(title));
+function findLabel(labels, keyLabelsParam) {
+  // find the highest priority (lowest array index) ticket label (if any)
+  const foundLabel = keyLabelsParam.find(keyLabel => {
+    if (labels.some(label => keyLabel.label.test(label))) return true;
+
+    return false;
+  });
+
+  return foundLabel;
+}
+
+function formatTitle({ labels, title }) {
+  let prefix = "";
+  let suffix = tidyString(title);
+
+  const foundLabel = findLabel(labels, keyLabels);
+
+  if (foundLabel) {
+    prefix = `${foundLabel.description}:`;
+
+    // if someone already prefixed the ticket title with the label, remove it
+    if (suffix.startsWith(prefix)) {
+      suffix = suffix.slice(prefix.length).trim();
+    }
+  }
+
+  const output = `${prefix} ${capitalize(suffix)}`.trim();
+
+  return output;
 }
 
 /* eslint-disable camelcase */
@@ -9,8 +37,8 @@ function formatReference({ repoName, issue_number }) {
   return `${repoName} #${issue_number}`;
 }
 
-function formatTicket({ title, repoName, issue_number }) {
-  return `${formatTitle({ title })} (${formatReference({
+function formatTicket({ labels, title, repoName, issue_number }) {
+  return `${formatTitle({ labels, title })} (${formatReference({
     repoName,
     issue_number,
   })})`;
@@ -38,6 +66,7 @@ function formatReportSection({ reportTitle, issues }) {
 }
 
 export {
+  findLabel,
   formatTitle,
   formatReference,
   formatTicket,

@@ -1,4 +1,5 @@
 import {
+  findLabel,
   formatTitle,
   formatReference,
   formatTicket,
@@ -7,13 +8,61 @@ import {
 } from "./index";
 
 const issues = [
-  { title: "test title", repoName: "test-repo", issue_number: 1 },
-  { title: "another title", repoName: "test-repo", issue_number: 2 },
+  {
+    issue_number: 1,
+    title: "test title",
+    labels: [],
+    repoName: "test-repo",
+  },
+  {
+    issue_number: 2,
+    title: "Epic: another title",
+    labels: ["Epic", "other"],
+    repoName: "test-repo",
+  },
+  {
+    issue_number: 3,
+    title: "yet another title",
+    labels: ["bug", "something"],
+    repoName: "test-repo",
+  },
+  {
+    issue_number: 4,
+    title: "Goal: This one is important",
+    labels: ["Goal", "something-else", "Epic"],
+    repoName: "test-repo",
+  },
 ];
+
+const keyLabels = [
+  { label: /^epic$/i, description: "Epic" },
+  { label: /^bug$/i, description: "Bug" },
+];
+
+describe("Finding and formatting key labels for ticket title prefixes", () => {
+  it("should return a label object when it finds a relevant label", () => {
+    expect(findLabel(issues[2].labels, keyLabels)).toStrictEqual({
+      label: /^bug$/i,
+      description: "Bug",
+    });
+  });
+  it("should ignore case when the regex flag '/i' is set", () => {
+    expect(findLabel(issues[3].labels, keyLabels)).toStrictEqual({
+      label: /^epic$/i,
+      description: "Epic",
+    });
+  });
+});
 
 describe("Formatting helpers for reports", () => {
   it("should capitalise issue titles", () => {
     expect(formatTitle(issues[0])).toBe("Test title");
+  });
+  it("should prefix titles with the highest priority key label", () => {
+    expect(formatTitle(issues[2])).toBe("Bug: Yet another title");
+  });
+  it("should tidy up titles if they've already been prefixed", () => {
+    expect(formatTitle(issues[1])).toBe("Epic: Another title");
   });
   it("should format issue references with repo name and ticket number", () => {
     expect(formatReference(issues[0])).toBe("test-repo #1");
@@ -33,7 +82,9 @@ describe("Report section formatting", () => {
     expect(formatReportSection({ reportTitle: "Section title", issues })).toBe(
       `### Section title
   * Test title (test-repo #1)
-  * Another title (test-repo #2)`,
+  * Epic: Another title (test-repo #2)
+  * Bug: Yet another title (test-repo #3)
+  * Goal: This one is important (test-repo #4)`,
     );
   });
 });
