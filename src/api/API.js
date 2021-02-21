@@ -1,6 +1,6 @@
 class API {
-  constructor({ axios, config, graphQL }) {
-    Object.assign(this, { axios, config, graphQL });
+  constructor({ axios, config }) {
+    Object.assign(this, { axios, config });
   }
 
   async get(headers, url, params = {}) {
@@ -21,6 +21,12 @@ class API {
     // TODO (dormerod): fix the string interpolation for the cursor here
     let after = "";
     if (cursor !== null) after = `, after: "${cursor}"`;
+
+    const url = this.config.githubEndpoint;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${this.config.githubToken}`,
+    };
 
     const query = /* GraphQL */ `
       query($owner: String!, $repo: String!) {
@@ -56,14 +62,24 @@ class API {
       repo,
     };
 
-    let data = null;
+    const request = {
+      url,
+      method: "post",
+      headers,
+      data: {
+        query,
+        variables,
+      },
+    };
+
+    let response = null;
     try {
-      data = await this.graphQL.request(query, variables);
+      response = await this.axios(request);
     } catch (e) {
       console.error(e);
     }
 
-    return data;
+    return response.data.data;
   }
 
   async getGithubIssues(owner, repo, cursor = null, issues = []) {
@@ -109,6 +125,7 @@ class API {
 
   async getZenhubBoard({ project, repo }) {
     const headers = {
+      "Content-Type": "application/json",
       "X-Authentication-Token": this.config.zenhubToken,
     };
     const endpoint = `https://api.zenhub.com/p2/workspaces/${project.zenhubWorkspaceID}/repositories/${repo.zenhubID}/board`;
@@ -119,6 +136,7 @@ class API {
 
   async getZenhubEvents({ repo, issue }) {
     const headers = {
+      "Content-Type": "application/json",
       "X-Authentication-Token": this.config.zenhubToken,
     };
     const endpoint = `https://api.zenhub.com/p1/repositories/${repo.zenhubID}/issues/${issue.issue_number}/events`;
