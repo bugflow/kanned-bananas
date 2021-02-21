@@ -19,4 +19,13 @@ function tidyString(string) {
   return tidied; // return the tidied string once there's nothing else to tidy
 }
 
-export { capitalize, sleep, tidyString };
+function typeset(string) {
+  const formatted = string
+    .replace(/-{3}/g, "—")
+    .replace(/-{2}/g, "–")
+    .replace(/ - /g, " – ");
+
+  return formatted;
+}
+
+export { capitalize, sleep, tidyString, typeset };

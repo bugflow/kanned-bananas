@@ -1,4 +1,4 @@
-import { capitalize, tidyString } from "../../util";
+import { capitalize, tidyString, typeset } from "../../util";
 import keyLabels from "./labels";
 
 function findLabel(labels, keyLabelsParam) {
@@ -39,7 +39,7 @@ function formatTitle({ labels, title }) {
 
   const output = `${prefix} ${capitalize(suffix)}`.trim();
 
-  return output;
+  return typeset(output);
 }
 
 /* eslint-disable camelcase */

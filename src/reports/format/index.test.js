@@ -22,7 +22,7 @@ const issues = [
   },
   {
     issue_number: 3,
-    title: "yet another title",
+    title: "yet another title - with a dash",
     labels: ["bug", "something"],
     repoName: "test-repo",
   },
@@ -59,7 +59,7 @@ describe("Formatting helpers for reports", () => {
     expect(formatTitle(issues[0])).toBe("Test title");
   });
   it("should prefix titles with the highest priority key label", () => {
-    expect(formatTitle(issues[2])).toBe("Bug: Yet another title");
+    expect(formatTitle(issues[2])).toBe("Bug: Yet another title – with a dash");
   });
   it("should tidy up titles if they've already been prefixed", () => {
     expect(formatTitle(issues[1])).toBe("Epic: Another title");
@@ -86,7 +86,7 @@ describe("Report section formatting", () => {
       `### Section title
   - Test title (test-repo #1)
   - Epic: Another title (test-repo #2)
-  - Bug: Yet another title (test-repo #3)
+  - Bug: Yet another title – with a dash (test-repo #3)
   - **Goal:** This one is important (test-repo #4)`,
     );
   });
