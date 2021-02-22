@@ -9,11 +9,7 @@ import { makeLabelFilter } from "../states/labels";
 async function runProjects() {
   // eslint-disable-next-line no-restricted-syntax
   for await (const project of config.projects) {
-    // TODO (dormerod): get project period and frequency from config
-    const time = new Time({
-      period: "week",
-    });
-
+    const time = new Time(project);
     const data = new Data({ api, cache, config });
 
     try {

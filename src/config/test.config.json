@@ -1,0 +1,21 @@
+{
+  "projects": [
+    {
+      "title": "Project Title",
+      "subtitle": "Client Name",
+      "fromTimestamp": "19000101T12:00:00",
+      "toTimestamp": null,
+      "includedLabels": null,
+      "excludedLabels": null,
+      "zenhubWorkspaceID": "abc123",
+      "repos": [
+        {
+          "description": "Project Repo",
+          "zenhubID": "12345",
+          "owner": "org-name",
+          "name": "repo-name"
+        }
+      ]
+    }
+  ]
+}

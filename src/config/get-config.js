@@ -1,20 +1,18 @@
-import dotenv from "dotenv";
-import fs from "fs";
+import readConfig from "./read-config";
+import projectDefaults from "./project-defaults";
 
-function getConfig() {
-  const kbConfigFile = "./kb.config.json";
-  dotenv.config();
+function getConfig(configFile, cliConfig = {}) {
+  const config = readConfig(configFile);
 
-  let config;
-  if (fs.existsSync(kbConfigFile)) {
-    config = JSON.parse(fs.readFileSync(kbConfigFile));
-  } else {
-    config = JSON.parse(process.env.KANNED_BANANAS_CONFIG);
-  }
+  // apply defaults, first CLI, then config file and finally project defaults
+  config.projects = config.projects.map(project => {
+    const projectData = {};
+    Object.keys(projectDefaults).forEach(key => {
+      projectData[key] = cliConfig[key] || project[key] || projectDefaults[key];
+    });
 
-  config.githubToken = process.env.GITHUB_TOKEN;
-  config.zenhubToken = process.env.ZENHUB_TOKEN;
-  config.githubEndpoint = "https://api.github.com/graphql";
+    return projectData;
+  });
 
   return config;
 }
