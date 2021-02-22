@@ -6,10 +6,9 @@ function labels(issues) {
   // filter issues to only the relevant columns (e.g. not icebox, new or done)
   const columns = getColumns();
   const relevantColumns = [
-    ...columns.futureBacklogs,
-    ...columns.currentBacklogs,
-    ...columns.failed,
-    ...columns.wip,
+    ...columns.inScope,
+    ...columns.active,
+    ...columns.uat,
   ];
   const relevantIssues = issues.filter(issue =>
     relevantColumns.includes(issue.column),
