@@ -14,17 +14,7 @@ async function runProjects() {
 
     try {
       const projectData = await data.load({ project, time });
-
-      // apply label filters
-      const includedLabels = [];
-      const excludedLabels = [
-        /^duplicate$/,
-        /^exclude$/,
-        /^ignore$/,
-        /^overtaken$/,
-      ];
-      const filterByLabel = makeLabelFilter({ includedLabels, excludedLabels });
-      const issues = projectData.zenhubIssues.filter(filterByLabel);
+      const issues = projectData.zenhubIssues.filter(makeLabelFilter(project));
 
       console.log(deliveryReport({ time, issues, project }));
     } catch (e) {
