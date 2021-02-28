@@ -63,4 +63,4 @@ ${uatWaitingReport}
   return summary;
 }
 
-export { deliveryReport };
+export default deliveryReport;

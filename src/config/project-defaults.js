@@ -2,16 +2,19 @@
 const projectDefaults = {
   title: null,
   subtitle: null,
+  reportType: "delivery",
   period: "week",
   fromTimestamp: null,
   toTimestamp: null,
-  includedLabels: null,
+  includedLabels: [],
   excludedLabels: [
     "/^duplicate$/",
     "/^exclude$/",
     "/^ignore$/",
     "/^overtaken$/",
   ],
+  includedMilestones: [],
+  excludedMilestones: [],
   zenhubWorkspaceID: null,
   repos: null,
 };

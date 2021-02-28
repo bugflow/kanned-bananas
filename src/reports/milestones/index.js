@@ -1,7 +1,7 @@
-function milestoneReport({ time, issues, project, includedMilestones }) {
+function milestoneReport({ time, issues, project }) {
   const issuesByMilestone = [];
 
-  includedMilestones.forEach(milestone => {
+  project.includedMilestones.forEach(milestone => {
     const relevantIssues = issues.filter(
       issue => issue.milestone === milestone,
     );
@@ -34,4 +34,4 @@ _${time.description()}_`;
   return summary;
 }
 
-export { milestoneReport };
+export default milestoneReport;
