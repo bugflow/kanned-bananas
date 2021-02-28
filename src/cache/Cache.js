@@ -36,6 +36,7 @@ class Cache {
       }
     } catch (e) {
       console.error(`Cached kanban at ${path} could not be read: ${e}`);
+      process.exit(1);
     }
 
     return null;
@@ -56,6 +57,7 @@ class Cache {
       });
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
   }
 
@@ -66,6 +68,7 @@ class Cache {
       events = await this.api.getZenhubEvents({ repo, issue });
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
 
     return events;

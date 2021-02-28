@@ -55,6 +55,7 @@ class Data {
         this.githubIssues.push({ name: repo.name, issues });
       } catch (e) {
         console.error(e);
+        process.exit(1);
       }
     }
   }
@@ -144,6 +145,7 @@ class Data {
         }
       } catch (e) {
         console.error(e);
+        process.exit(1);
       }
 
       await sleep(600); // Zenhub API rate limit is 100 requests per min

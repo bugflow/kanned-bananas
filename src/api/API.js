@@ -11,6 +11,7 @@ class API {
       response = await this.axios(request);
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
 
     return response.data;
@@ -77,6 +78,7 @@ class API {
       response = await this.axios(request);
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
 
     return response.data.data;
@@ -118,6 +120,7 @@ class API {
       }
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
 
     return knownIssues;

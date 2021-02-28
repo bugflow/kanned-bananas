@@ -19,6 +19,7 @@ async function runProjects() {
       console.log(deliveryReport({ time, issues, project }));
     } catch (e) {
       console.error(e);
+      process.exit(1);
     }
   }
 }
