@@ -6,6 +6,7 @@ const projectDefaults = {
   period: "week",
   fromTimestamp: null,
   toTimestamp: null,
+  overdelivery: false,
   includedLabels: [],
   excludedLabels: [
     "/^duplicate$/",

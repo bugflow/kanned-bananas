@@ -20,45 +20,63 @@ function deliveryReport({ time, issues, project }) {
   } = stocks(issues);
   const { blockedReport } = labels(issues);
 
-  const summary = `
-# ${project.title} – Delivery Report
+  let summary = "";
 
-## ${project.subtitle}
+  if (project.title) summary += `# ${project.title} – Delivery Report\n\n`;
 
-**Report generated on:** ${time.today()}
+  if (project.subtitle) summary += `## ${project.subtitle}\n\n`;
+
+  summary += `**Report generated on:** ${time.today()}
 
 ---
 
-## Requiring your attention
+`;
+
+  if (blockedReport) {
+    summary += `## Requiring your attention
 
 ${blockedReport}
 
 ---
 
-## Completed
+`;
+  }
+
+  if (summaryReport !== "### Summary of work done (number of tickets)") {
+    summary += `## Completed
 
 _${time.description()}_
 
 ${summaryReport}
 
-${uatAddedReport}
+`;
 
-${overdeliveryReport}
+    if (uatAddedReport) summary += `${uatAddedReport}\n\n`;
 
-${doneReport}
+    if (project.overdelivery && overdeliveryReport)
+      summary += `${overdeliveryReport}\n\n`;
 
----
+    if (doneReport) summary += `${doneReport}\n\n`;
 
-## Next
+    summary += `---
+
+`;
+  }
+
+  if (stockSummary !== "### Summary of upcoming work (number of tickets)") {
+    summary += `## Next
 
 ${stockSummary}
 
-${workingReport}
+`;
+    if (workingReport) summary += `${workingReport}\n\n`;
 
-${testingReport}
+    if (testingReport) summary += `${testingReport}\n\n`;
 
-${uatWaitingReport}
-`.replace(/(\n){3,}/g, "\n\n"); // tidy up three or more consecutive line breaks
+    if (uatWaitingReport) summary += `${uatWaitingReport}\n\n`;
+  }
+
+  summary = summary.replace(/(\n){3,}/g, "\n\n"); // tidy up newlines
 
   return summary;
 }
