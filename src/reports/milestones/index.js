@@ -12,20 +12,22 @@ function milestoneReport({ issues, project }) {
     });
   });
 
-  let csv = `\n"id", "title", "milestone", "date_updated", "repo"`;
+  let csv = `"unique_id", "repo", "id", "title", "milestone", "date_updated"`;
 
   issuesByMilestone.forEach(milestone => {
     milestone.issues.forEach(issue => {
-      csv += `\n${issue.issue_number}, "${issue.title
+      csv += `\n"${issue.repoName}#${issue.issue_number}", "${
+        issue.repoName
+      }", ${issue.issue_number}, "${issue.title
         .replace(/"/g, "'")
         .trim()}", "${issue.milestone.trim()}", ${issue.milestonedDate.slice(
         0,
         10,
-      )}, "${issue.repoName}"`;
+      )}`;
     });
   });
 
-  return csv;
+  return `${csv}\n`; // add trailing newline
 }
 
 export default milestoneReport;
