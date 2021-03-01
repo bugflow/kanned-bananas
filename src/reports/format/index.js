@@ -75,6 +75,24 @@ function formatReportSection({ reportTitle, issues }) {
   return report;
 }
 
+function formatCSV({ issues }) {
+  let report = `"unique_id", "repo", "id", "title", "status"`;
+
+  if (issues.length > 0) {
+    issues.forEach(issue => {
+      if (issue.title) {
+        report += `\n"${issue.repoName}#${issue.issue_number}", "${
+          issue.repoName
+        }", ${issue.issue_number}, "${issue.title
+          .replace(/"/g, "'")
+          .trim()}", "${issue.column.trim()}"`;
+      }
+    });
+  }
+
+  return report;
+}
+
 export {
   findLabel,
   formatTitle,
@@ -82,4 +100,5 @@ export {
   formatTicket,
   formatIndentedTicketRow,
   formatReportSection,
+  formatCSV,
 };

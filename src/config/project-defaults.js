@@ -15,6 +15,7 @@ const projectDefaults = {
   ],
   includedMilestones: [],
   excludedMilestones: [],
+  includedColumns: [], // TODO (dormerod): support filtering + excluding here
   zenhubWorkspaceID: null,
   repos: null,
 };
