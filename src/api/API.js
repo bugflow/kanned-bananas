@@ -42,13 +42,7 @@ class API {
                   title
                 }
                 timelineItems(itemTypes: MILESTONED_EVENT, last: 1) {
-                  edges {
-                    node {
-                      ... on MilestonedEvent {
-                        createdAt
-                      }
-                    }
-                  }
+                  updatedAt
                 }
                 labels(first: 10) {
                   edges {

@@ -118,13 +118,19 @@ class Data {
                 // if we found the Github issue add properties & close events
                 issue.title = foundIssue.node.title;
 
-                issue.milestone = foundIssue.node.milestone
-                  ? foundIssue.node.milestone.title
-                  : null;
-
                 issue.labels = foundIssue.node.labels.edges.map(
                   edge => edge.node.name,
                 );
+
+                if (foundIssue.node.milestone !== null) {
+                  issue.milestone = foundIssue.node.milestone.title;
+                  issue.milestonedDate =
+                    foundIssue.node.timelineItems.updatedAt;
+                }
+
+                issue.milestone = foundIssue.node.milestone
+                  ? foundIssue.node.milestone.title
+                  : null;
 
                 if (foundIssue.node.closed) {
                   issue.events.push({

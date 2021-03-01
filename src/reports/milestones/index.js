@@ -1,4 +1,4 @@
-function milestoneReport({ time, issues, project }) {
+function milestoneReport({ issues, project }) {
   const issuesByMilestone = [];
 
   project.includedMilestones.forEach(milestone => {
@@ -12,26 +12,20 @@ function milestoneReport({ time, issues, project }) {
     });
   });
 
-  let summary = `
-# ${project.title} – Milestone Report
-
-## ${project.subtitle}
-
-**Report generated on:** ${time.today()}
-
-_${time.description()}_`;
+  let csv = `\n"id", "title", "milestone", "date_updated", "repo"`;
 
   issuesByMilestone.forEach(milestone => {
-    summary += `\n\n### ${milestone.title}\n`;
-
     milestone.issues.forEach(issue => {
-      summary += `\n${issue.title}`;
+      csv += `\n${issue.issue_number}, "${issue.title
+        .replace(/"/g, "'")
+        .trim()}", "${issue.milestone.trim()}", ${issue.milestonedDate.slice(
+        0,
+        10,
+      )}, "${issue.repoName}"`;
     });
   });
 
-  summary.replace(/(\n){3,}/g, "\n\n"); // tidy up three or more consecutive line breaks
-
-  return summary;
+  return csv;
 }
 
 export default milestoneReport;
