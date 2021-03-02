@@ -6,7 +6,7 @@ the "stocks view" is classic kanban. The "flows view" is missing, although thing
 
 Use:
 
-1. do `.env.example .env` then edit it
+1. do `cp .env.example .env` then edit it
 2. review example config file `example.kb.config.json`
 3. create a config file like `my_foo.kb.config.json`
 4. `./run my_foo`
